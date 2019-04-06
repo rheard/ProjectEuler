@@ -12,13 +12,14 @@ Using words.txt (right click and 'Save Link/Target As...'), a 16K text file cont
     common English words, how many are triangle words?
 '''
 
+from __future__ import print_function
 
-def solve():
+with open('ProjectEuler/words.txt', 'r') as rb:
+    _words = [x.strip('"') for x in rb.read().split(',')]
+
+
+def solve(words=_words):
     triangle_numbers = set(0.5 * n * (n + 1) for n in range(1, 100))
-
-    word_list = None
-    with open('ProjectEuler/words.txt', 'r') as rb:
-        word_list = [x.strip('"') for x in rb.read().split(',')]
 
     def get_word_value(word):
         return sum([ord(x) - 0x60 for x in word.lower()])
@@ -26,7 +27,7 @@ def solve():
     def triangle_word(word):
         return get_word_value(word) in triangle_numbers
 
-    triangle_words = [x for x in word_list if triangle_word(x)]
+    triangle_words = [x for x in words if triangle_word(x)]
 
     return len(triangle_words)
 

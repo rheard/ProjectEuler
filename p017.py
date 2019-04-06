@@ -11,6 +11,8 @@ NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-
     compliance with British usage.
 '''
 
+from __future__ import print_function
+
 ones_place_wordlen = [4, 3, 3, 5, 4, 4, 3, 5, 5, 4, 3, 6, 6, 8, 8, 7, 7, 9, 8, 8]
 tens_place_wordlen = [None, None, 6, 6, 5, 5, 5, 7, 6, 6]
 

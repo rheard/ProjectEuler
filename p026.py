@@ -1,7 +1,3 @@
-from decimal import Decimal, getcontext
-from math import ceil, floor
-
-
 '''
 A unit fraction contains 1 in the numerator.
 The decimal representation of the unit fractions with denominators 2 to 10 are given:
@@ -21,11 +17,15 @@ Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle.
 Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
 '''
 
+from __future__ import print_function
+from decimal import Decimal, getcontext
+from math import ceil, floor
+
 
 def repeating_pattern_len(a, b):
     # The upper limit for a repetend is (b - 1). Ensure there is
     #   enough precision to get at least 2 cycles.
-    desired_precision = ceil(2.5 * (b - 1))
+    desired_precision = int(ceil(2.5 * (b - 1)))
     if getcontext().prec < desired_precision:
         getcontext().prec = desired_precision
 
@@ -36,7 +36,7 @@ def repeating_pattern_len(a, b):
         return 0
 
     str_dec_val = str_dec_val.split('.')[-1]
-    search_space = str_dec_val[floor(0.25 * (b - 1)):-1] + 'x'
+    search_space = str_dec_val[int(floor(0.25 * (b - 1))):-1] + 'x'
 
     for possible_len in range(1, b):
         search_pattern = search_space[-possible_len - 1:-1]

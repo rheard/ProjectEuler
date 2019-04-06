@@ -18,14 +18,14 @@ We can see that 28 is the first triangle number to have over five divisors.
 What is the value of the first triangle number to have over five hundred divisors?
 '''
 
-from ProjectEuler.lib import prime_factors_dict, tri_generator, prod, sieve
+from __future__ import print_function
+from lib import tri_generator
+from sympy import divisors
 
 
 def solve(n=500):
-    primes = sieve(10 ** 7)
     for num in tri_generator():
-        prime_factors = prime_factors_dict(num, primes)
-        factor_count = prod(exp + 1 for prime, exp in prime_factors.items())
+        factor_count = len(divisors(num))
         if factor_count > n:
             return num
 

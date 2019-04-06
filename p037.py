@@ -1,5 +1,8 @@
 '''
-The number 3797 has an interesting property. Being prime itself, it is possible to continuously remove digits from left to right, and remain prime at each stage: 3797, 797, 97, and 7. Similarly we can work from right to left: 3797, 379, 37, and 3.
+The number 3797 has an interesting property. Being prime itself,
+    it is possible to continuously remove digits from left to right,
+    and remain prime at each stage: 3797, 797, 97, and 7.
+    Similarly we can work from right to left: 3797, 379, 37, and 3.
 
 Find the sum of the only eleven primes that are both truncatable from left to right and right to left.
 
@@ -7,41 +10,42 @@ NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 '''
 
 # We're given there are 11, so do not use a fixed upper limit. Just iterate till we find 11.
-# If not left-truncatable, then don't check for right-truncatable.
 
-from ProjectEuler.lib import segmented_sieve
+from __future__ import print_function
+from sympy import Sieve, isprime
 from math import log10, floor
+from itertools import count
 
 
 def two_sided_primes():
-    def right_truncatable(n, primes):
-        for possible_prime in (n // 10**i for i in range(floor(log10(n)) + 1)):
-            if possible_prime not in primes:
+    def right_truncatable(n):
+        for possible_prime in (n // 10**i for i in range(int(floor(log10(n))) + 1)):
+            if not isprime(possible_prime):
                 return False
 
         return True
 
-    def left_truncatable(n, primes):
-        for possible_prime in (n % 10**i for i in range(floor(log10(n)) + 1, 0, -1)):
-            if possible_prime not in primes:
+    def left_truncatable(n):
+        for possible_prime in (n % 10**i for i in range(int(floor(log10(n))) + 1, 0, -1)):
+            if not isprime(possible_prime):
                 return False
 
         return True
 
-    primes = []
-    found_count = 0
-    for prime in segmented_sieve():
-        primes.append(prime)
+    s = Sieve()
+    for i in count(5):
+        if len(s._list) < i:
+            s.extend_to_no(i)
 
-        if prime > 10 and left_truncatable(prime, primes) and right_truncatable(prime, primes):
-            yield prime
-            found_count += 1
-            if found_count == 11:
-                break
+        prime_i = s._list[i - 1]
+
+        if left_truncatable(prime_i) and right_truncatable(prime_i):
+            yield prime_i
 
 
 def solve():
-    return sum(two_sided_primes())
+    gener = two_sided_primes()
+    return sum(next(gener) for x in range(11))
 
 
 if __name__ == '__main__':

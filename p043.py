@@ -16,6 +16,8 @@ Find the sum of all 0 to 9 pandigital numbers with this property.
 
 # I was trying to avoid using a series of nested for loops for this problem, while keeping the speed up. This is what I came up with.
 
+from __future__ import print_function
+
 
 def numbers_of_interest():
     primes = [2, 3, 5, 7, 11, 13, 17]

@@ -8,6 +8,8 @@ There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 Find the product abc.
 '''
 
+from __future__ import print_function
+
 
 def solve():
     is_pythagorean_triplet = lambda a, b, c: a**2 + b**2 == c**2
@@ -18,6 +20,7 @@ def solve():
             c = 1000 - a - b
             if is_pythagorean_triplet(a, b, c):
                 product = a * b * c
+                break
 
     return product
 

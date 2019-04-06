@@ -1,5 +1,5 @@
 '''
-The four adjacent digits in the 1000-digit number that have the greatest product are 9 × 9 × 8 × 9 = 5832.
+The four adjacent digits in the 1000-digit number that have the greatest product are 9 * 9 * 8 * 9 = 5832.
 
 73167176531330624919225119674426574742355349194934
 96983520312774506326239578318016984801869478851843
@@ -26,7 +26,8 @@ Find the thirteen adjacent digits in the 1000-digit number that have the greates
     What is the value of this product?
 '''
 
-from ProjectEuler.lib import prod
+from __future__ import print_function
+from lib import prod
 
 _target_number = '''73167176531330624919225119674426574742355349194934
 96983520312774506326239578318016984801869478851843

@@ -4,6 +4,8 @@
 What is the sum of the digits of the number 21000?
 '''
 
+from __future__ import print_function
+
 
 def solve(n=1000):
     return sum(int(x) for x in str(2**n))

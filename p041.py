@@ -5,8 +5,8 @@ We shall say that an n-digit number is pandigital if it makes use of all the dig
 What is the largest n-digit pandigital prime that exists?
 '''
 
-from ProjectEuler.lib import sieve
-from math import log10, ceil
+from __future__ import print_function
+from sympy import sieve
 
 '''
 First we can use the divisibility rule for 3 to reduce the search space.
@@ -27,16 +27,10 @@ So there can be a 7 digit pandigital number not divisible by 3. That is where th
 
 
 def solve():
-    largest_pandigital = 0
     seven_digits = [str(x) for x in range(1, 8)]
-    for prime in sieve(10**7):
-        if ceil(log10(prime)) < 7:
-            continue
-
-        if seven_digits == sorted(str(prime)):
-            largest_pandigital = prime
-
-    return largest_pandigital
+    for prime_num in reversed(list(sieve.primerange(10**6, 10**7))):
+        if seven_digits == sorted(str(prime_num)):
+            return prime_num
 
 
 if __name__ == '__main__':

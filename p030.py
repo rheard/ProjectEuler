@@ -14,6 +14,8 @@ Find the sum of all the numbers that can be written as the sum
     of fifth powers of their digits.
 '''
 
+from __future__ import print_function
+
 
 def solve(n=5):
     maximum = n * 9**n + 1

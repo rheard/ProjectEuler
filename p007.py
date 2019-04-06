@@ -4,14 +4,12 @@ By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that 
 What is the 10,001st prime number?
 '''
 
-from ProjectEuler.lib import segmented_sieve
+from __future__ import print_function
+from sympy import prime
 
 
-def solve(n=10000):
-    primes = segmented_sieve()
-    for i, prime in enumerate(primes):
-        if i == n:
-            return prime
+def solve(n=10001):
+    return prime(n)
 
 
 if __name__ == '__main__':
