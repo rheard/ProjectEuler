@@ -1,3 +1,5 @@
+from __future__ import division
+from math import factorial
 import operator
 import functools
 import fractions
@@ -37,3 +39,7 @@ def lcm(*numbers):
         return (a * b) // gcd(a, b)
 
     return functools.reduce(lcm, numbers, 1)
+
+
+def binomial(n, k):
+    return factorial(n) / (factorial(k) * factorial(n - k))
