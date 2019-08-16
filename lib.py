@@ -1,21 +1,25 @@
 import operator
 import functools
 import fractions
+import math
 
 prod = lambda x: functools.reduce(operator.mul, x, 1)
+phi = (1 + math.sqrt(5)) / 2
 
 
 # Generator to cycle through all Fibonacci numbers cleanly
-def fib_generator():
-    a = 1
-    b = 1
-
+def fib_generator(a=1, b=1):
     yield a
     yield b
 
     while True:
         a, b = b, a + b
         yield b
+
+
+def fib(n):
+    """Get the nth fibonacci number"""
+    return int(round((phi**n - (-phi)**-n) / math.sqrt(5), 0))
 
 
 # Generator to cycle through all triangle numbers cleanly
