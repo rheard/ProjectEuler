@@ -1,4 +1,4 @@
-'''
+"""
 The fraction 49/98 is a curious fraction, as an inexperienced mathematician in attempting to simplify it
     may incorrectly believe that 49/98 = 4/8, which is correct, is obtained by cancelling the 9s.
 
@@ -8,12 +8,19 @@ There are exactly four non-trivial examples of this type of fraction, less than 
     and containing two digits in the numerator and denominator.
 
 If the product of these four fractions is given in its lowest common terms, find the value of the denominator.
-'''
+"""
 
 from __future__ import print_function
+
+import os
+
 from decimal import Decimal
 from fractions import Fraction
-from lib import prod
+
+try:
+    from .utils import output_answer, prod
+except ImportError:
+    from utils import output_answer, prod
 
 
 def digit_canceling_fractions():
@@ -33,16 +40,22 @@ def digit_canceling_fractions():
             for i, num_digit in enumerate(str_numerator):
                 for j, den_digit in enumerate(str_denominator):
                     if num_digit == den_digit:
-                        if original_fraction == Decimal(int(str_numerator[(i + 1) % 2])) / Decimal(int(str_denominator[(j + 1) % 2])):
+                        if original_fraction == \
+                                Decimal(int(str_numerator[(i + 1) % 2])) / Decimal(int(str_denominator[(j + 1) % 2])):
                             yield Decimal(numerator), Decimal(denominator)
 
 
 def solve():
-    return prod(Fraction(Decimal(numerator) / Decimal(denominator)) for numerator, denominator in digit_canceling_fractions()).denominator
+    """
+    We're going to go over the possible numerators,
+        and try to find a denominator that creates a digit cancelling fraction.
+    """
+    return prod(Fraction(numerator / denominator)
+                for numerator, denominator in digit_canceling_fractions()).denominator
+
+
+solve.answer = 100
 
 
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p033_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

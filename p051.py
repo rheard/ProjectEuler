@@ -1,4 +1,4 @@
-'''
+"""
 By replacing the 1st digit of the 2-digit number *3, it turns out that six of the nine possible values:
     13, 23, 43, 53, 73, and 83, are all prime.
 
@@ -10,15 +10,21 @@ By replacing the 3rd and 4th digits of 56**3 with the same digit,
 
 Find the smallest prime which, by replacing part of the number (not necessarily adjacent digits)
     with the same digit, is part of an eight prime value family.
-'''
-
-# This runs in 40s on Python 3. Less than 1 minute rule done, next problem.
+"""
 
 from __future__ import print_function
+
+import os
+
 from collections import defaultdict
 from itertools import count
-from sympy.utilities.iterables import kbins
+
 from sympy import sieve
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def generate_digit_permutations(n, c):
@@ -39,6 +45,19 @@ def generate_permutations(n):
 
 
 def solve(n=8):
+    """
+    This problem is similar to the solution to problem 49. The difference is that we generate multiple "digit hashes"
+        for a number, and add it to a bucket for each digit hash. The first bucket to 8 primes wins.
+
+    For instance with 56003, that number will generate the digit hashes:
+        5600*
+        560**
+        560*3
+        56*03
+        56*03
+        56*0*
+        etc...
+    """
     hash_map = defaultdict(list)
     for i in count():
         if len(sieve._list) <= i:
@@ -53,8 +72,8 @@ def solve(n=8):
                 return min(hash_map[permutation])
 
 
+solve.answer = 121313
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p051_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

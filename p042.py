@@ -1,4 +1,4 @@
-'''
+"""
 The nth term of the sequence of triangle numbers is given by,
     t_n = 0.5 * n * (n + 1); so the first ten triangle numbers are:
 
@@ -10,30 +10,39 @@ By converting each letter in a word to a number corresponding to its alphabetica
 
 Using words.txt (right click and 'Save Link/Target As...'), a 16K text file containing nearly two-thousand
     common English words, how many are triangle words?
-'''
+"""
 
 from __future__ import print_function
 
+import os
+
+try:
+    from .utils import output_answer, triangle
+except ImportError:
+    from utils import output_answer, triangle
+
+
 with open('ProjectEuler/words.txt', 'r') as rb:
-    _words = [x.strip('"') for x in rb.read().split(',')]
+    __WORDS = [x.strip('"') for x in rb.read().split(',')]
 
 
-def solve(words=_words):
-    triangle_numbers = set(0.5 * n * (n + 1) for n in range(1, 100))
+def solve(words=None):
+    """No strategy here. Bruteforce."""
+    triangle_numbers = set(triangle(n) for n in range(1, 100))
 
     def get_word_value(word):
-        return sum([ord(x) - 0x60 for x in word.lower()])
+        return sum(ord(x) - 0x60 for x in word.lower())
 
     def triangle_word(word):
         return get_word_value(word) in triangle_numbers
 
-    triangle_words = [x for x in words if triangle_word(x)]
+    triangle_words = [x for x in (words or __WORDS) if triangle_word(x)]
 
     return len(triangle_words)
 
 
+solve.answer = 162
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p042_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

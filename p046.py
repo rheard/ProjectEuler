@@ -1,5 +1,6 @@
-'''
-It was proposed by Christian Goldbach that every odd composite number can be written as the sum of a prime and twice a square.
+"""
+It was proposed by Christian Goldbach that every odd composite number can be written as the sum of a prime and
+    twice a square.
 
 9 = 7 + 2*1**2
 15 = 7 + 2*2**2
@@ -11,14 +12,24 @@ It was proposed by Christian Goldbach that every odd composite number can be wri
 It turns out that the conjecture was false.
 
 What is the smallest odd composite that cannot be written as the sum of a prime and twice a square?
-'''
+"""
 
 from __future__ import print_function
-from sympy import prevprime, isprime
+
+import os
+
 from itertools import count
+
+from sympy import prevprime, isprime
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def solve():
+    """No strategy here. Bruteforce."""
     for odd_composite in count(start=9, step=2):
         if isprime(odd_composite):
             continue
@@ -45,8 +56,8 @@ def solve():
             return odd_composite
 
 
+solve.answer = 5777
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p046_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

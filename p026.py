@@ -1,4 +1,4 @@
-'''
+"""
 A unit fraction contains 1 in the numerator.
 The decimal representation of the unit fractions with denominators 2 to 10 are given:
 
@@ -15,11 +15,19 @@ Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle.
     It can be seen that 1/7 has a 6-digit recurring cycle.
 
 Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
-'''
+"""
 
 from __future__ import print_function
+
+import os
+
 from decimal import Decimal, getcontext
 from math import ceil, floor
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def repeating_pattern_len(a, b):
@@ -41,7 +49,11 @@ def repeating_pattern_len(a, b):
     for possible_len in range(1, b):
         search_pattern = search_space[-possible_len - 1:-1]
         working_len = True
-        for test_string in (x for x in (search_space[i * -possible_len - 1:(i - 1) * -possible_len - 1] for i in range(len(search_space) // possible_len)) if x != ''):
+        for test_string in (search_space[i * -possible_len - 1:(i - 1) * -possible_len - 1]
+                            for i in range(len(search_space) // possible_len)):
+            if not test_string:
+                continue
+
             if test_string != search_pattern:
                 working_len = False
                 break
@@ -53,6 +65,10 @@ def repeating_pattern_len(a, b):
 
 
 def solve():
+    """
+    Nothing super fancy here, simply computing 1/d to a very long number of digits
+        and looking for the longest possible repeating pattern. Then repeat that process for all numbers in our range.
+    """
     longest_d = 0
     longest_len = 0
     for d in range(7, 1000):
@@ -64,8 +80,8 @@ def solve():
     return longest_d
 
 
+solve.answer = 983
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p026_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

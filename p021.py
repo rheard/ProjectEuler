@@ -1,4 +1,4 @@
-'''
+"""
 Let d(n) be defined as the sum of proper divisors of n
     (numbers less than n which divide evenly into n).
 If d(a) = b and d(b) = a, where a != b, then a and b are an amicable pair
@@ -9,15 +9,24 @@ For example, the proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 a
     so d(284) = 220.
 
 Evaluate the sum of all the amicable numbers under 10000.
-'''
+"""
 
 from __future__ import print_function
 
+import os
 
-# Instead of finding the proper divisors and summing them,
-#   we're going to go through each number, and for each multiple in the target
-#   range, add to a running sum. d will be an array of sums instead of a function.
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
+
 def solve():
+    """
+    Instead of finding the proper divisors and summing them,
+        we're going to go through each number, and for each multiple in the target range, add to a running sum.
+        d will be an array of sums instead of a function.
+    """
     def is_amicable(d, limit, n):
         return d[n] != n and d[n] < limit and d[d[n]] == n
 
@@ -31,8 +40,8 @@ def solve():
     return sum(i for i in range(1, limit) if is_amicable(d, limit, i))
 
 
+solve.answer = 31626
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p021_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

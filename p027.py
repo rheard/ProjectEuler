@@ -1,4 +1,4 @@
-'''
+"""
 Euler discovered the remarkable quadratic formula:
 
 n**2 + n + 41
@@ -17,13 +17,21 @@ where |n| is the modulus/absolute value of n
 e.g. |11| = 11 and |-4| = 4
 Find the product of the coefficients, a and b, for the quadratic expression that produces
     the maximum number of primes for consecutive values of n, starting with n=0.
-'''
+"""
 
 from __future__ import print_function
-from sympy import isprime, sieve
+
+import os
+
+from sympy import sieve
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
-def consecutive_prime_count(a, b, _primes=None):
+def consecutive_prime_count(a, b, _primes):
     n = 0
     while True:
         if n**2 + a * n + b not in _primes:
@@ -33,6 +41,11 @@ def consecutive_prime_count(a, b, _primes=None):
 
 
 def solve():
+    """
+    Nothing fancy here except caching of the primes in a set.
+
+    If the numbers in this problem were to change, this wouldn't work.
+    """
     highest_prime_count = 0
     highest_a = 0
     highest_b = 0
@@ -51,8 +64,8 @@ def solve():
     return highest_a * highest_b
 
 
+solve.answer = -59231
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p027_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

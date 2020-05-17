@@ -1,4 +1,4 @@
-'''
+"""
 The following iterative sequence is defined for the set of positive integers:
 
 n -> n/2 (n is even)
@@ -13,16 +13,26 @@ It can be seen that this sequence (starting at 13 and finishing at 1) contains 1
 Which starting number, under one million, produces the longest chain?
 
 NOTE: Once the chain starts the terms are allowed to go above one million.
-'''
+"""
 
 from __future__ import print_function
 
+import os
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
 
 def collatz_op(n):
-    return n // 2 if n % 2 == 0 else 3 * n + 1
+    """Apply the collatz operation once"""
+    div, mod = divmod(n, 2)
+    return div if mod == 0 else 3 * n + 1
 
 
 def collatz_generator(n):
+    """Generate the collatz sequence for n."""
     yield n
     while True:
         n = collatz_op(n)
@@ -30,6 +40,12 @@ def collatz_generator(n):
 
 
 def solve(n=10**6):
+    """
+    The only optimization here is that, if we find the chain length for a number, and a sequence goes to that number,
+        we don't need to compute the rest of the sequence.
+
+    It is simply the previously found length + the current length.
+    """
     longest_chain = 0
     longest_chain_i = 0
     found_lengths = {1: 1}
@@ -51,8 +67,8 @@ def solve(n=10**6):
     return longest_chain_i
 
 
+solve.answer = 837799
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p014_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

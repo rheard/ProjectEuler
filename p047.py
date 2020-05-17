@@ -1,4 +1,4 @@
-'''
+"""
 The first two consecutive numbers to have two distinct prime factors are:
 
 14 = 2 * 7
@@ -12,14 +12,24 @@ The first three consecutive numbers to have three distinct prime factors are:
 
 Find the first four consecutive integers to have four distinct prime factors each.
     What is the first of these numbers?
-'''
+"""
 
 from __future__ import print_function
+
+import os
+
 from itertools import count
+
 from sympy import factorint
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def solve(n=4):
+    """No strategy here. Bruteforce."""
     found_len = 0
     first_i = 0
     for i in count(2):
@@ -36,8 +46,8 @@ def solve(n=4):
     return first_i
 
 
+solve.answer = 134043
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p047_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

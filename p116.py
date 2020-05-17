@@ -27,7 +27,7 @@ NOTE: This is related to Problem 117.
 """
 
 from __future__ import print_function, division
-from lib import binomial
+from utils import binomial
 from math import floor
 
 """
@@ -36,8 +36,8 @@ We cannot use our equations from the previous problem because
  * Different size tiles cannot be mixed.
 
 The sequence of the number of arrangements for the red (2-length) tiles can be
-    found on OEIS (A000071). Surprisingly, a similar formula to the previous equation is
-    found, giving...
+    found on OEIS (A000071), which is the n-th Fibonacci number minus 1. 
+    Surprisingly, a similar formula to the previous equation is found, giving...
 
 red arrangements = sum(binomial(n-k, k) for k in range(1, floor(n/2) + 1))
 
@@ -50,8 +50,8 @@ def arrangements(n, m):
     return sum(binomial(n-(m-1)*k, k) for k in range(1, floor(n/m) + 1))
 
 
-def solve(l=50):
-    return int(arrangements(l, 2) + arrangements(l, 3) + arrangements(l, 4))
+def solve(n=50):
+    return int(arrangements(n, 2) + arrangements(n, 3) + arrangements(n, 4))
 
 
 if __name__ == '__main__':

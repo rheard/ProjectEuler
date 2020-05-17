@@ -1,4 +1,4 @@
-'''
+"""
 We shall say that an n-digit number is pandigital if it makes use of all the digits
     1 to n exactly once; for example, the 5-digit number, 15234, is 1 through 5 pandigital.
 
@@ -8,13 +8,25 @@ The product 7254 is unusual, as the identity, 39 * 186 = 7254, containing multip
 Find the sum of all products whose multiplicand/multiplier/product identity can be written as a 1 through 9 pandigital.
 
 HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
-'''
+"""
 
 from __future__ import print_function
+
+import os
+
 from itertools import permutations
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def solve():
+    """
+    We're going to go through all the possible orderings of the digits 1 through 9 and try to split it to form
+        a working equation.
+    """
     def pandigital_products():
         for string_eq in permutations(list(str(x) for x in range(1, 10)), 9):
             string_eq = "".join(string_eq)
@@ -29,8 +41,8 @@ def solve():
     return sum(set(pandigital_products()))
 
 
+solve.answer = 45228
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p032_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

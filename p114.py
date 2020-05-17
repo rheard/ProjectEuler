@@ -21,7 +21,9 @@ NOTE: Although the example above does not lend itself to the possibility,
 """
 
 from __future__ import print_function, division
-from lib import binomial
+from math import floor
+
+from utils import binomial
 
 """
 Brute forcing this problem for all 50 units is too inefficient.
@@ -35,7 +37,7 @@ After searching on OEIS this is sequnce A005252, which has the formula:
 """
 
 
-def solve(l=50):
+def solve(n=50):
     return int(sum(binomial(n - 2*k + 1, 2*k) for k in range(floor((n + 1)/4) + 1)))
 
 

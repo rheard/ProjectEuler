@@ -1,4 +1,4 @@
-'''
+"""
 Surprisingly there are only three numbers that can be written
     as the sum of fourth powers of their digits:
 
@@ -12,12 +12,20 @@ The sum of these numbers is 1634 + 8208 + 9474 = 19316.
 
 Find the sum of all the numbers that can be written as the sum
     of fifth powers of their digits.
-'''
+"""
 
 from __future__ import print_function
 
+import os
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
 
 def solve(n=5):
+    """No strategy here. Bruteforce."""
     maximum = n * 9**n + 1
     running_sum = 0
     for possible_num in range(10, maximum):
@@ -27,8 +35,8 @@ def solve(n=5):
     return running_sum
 
 
+solve.answer = 443839
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p030_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

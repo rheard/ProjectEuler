@@ -18,7 +18,7 @@ NOTE: This problem is an easier version of Problem 110;
 from __future__ import print_function, division
 from sympy import factorint, sieve
 from math import ceil, log
-from lib import prod
+from utils import prod
 
 
 """

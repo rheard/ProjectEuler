@@ -1,5 +1,5 @@
-'''
-By starting at the top of the triangle below and moving to adjacent numbers on the row below, 
+"""
+By starting at the top of the triangle below and moving to adjacent numbers on the row below,
     the maximum total from top to bottom is 23.
 
 3
@@ -30,14 +30,22 @@ Find the maximum total from top to bottom of the triangle below:
 NOTE: As there are only 16384 routes, it is possible to solve this problem by trying every route.
     However, Problem 67, is the same challenge with a triangle containing one-hundred rows;
     it cannot be solved by brute force, and requires a clever method! ;o)
-'''
+"""
 
 from __future__ import print_function
+
+import os
+
 from copy import deepcopy
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 # We're going to solve this using a clever method for problem 67 later.
 # First lets build the puzzle of interest for this problem.
-_puzzle = [[int(x) for x in line.split(' ')] for line in '''75
+__PUZZLE = [[int(x) for x in line.split(' ')] for line in '''75
 95 64
 17 47 82
 18 35 87 10
@@ -73,13 +81,23 @@ def max_total_path(puzzle):
     return puzzle[0][0]
 
 
-# Lets wrap this up.
-def solve(puzzle=_puzzle):
-    return max_total_path(puzzle)
+def solve(puzzle=None):
+    """
+    This puzzle doesn't require a clever solution, but a later problem does, so we must solve this efficiently.
+
+    We do this by solving the problem in reverse:
+        1. Start on the second to last row
+        2. For each element in the row, add the max of the two below it.
+        3. Eliminate the last row.
+        4. If there is more than 1 row left, go to 1.
+
+    The last element at the top of the puzzle after addition is the answer.
+    """
+    return max_total_path(puzzle or __PUZZLE)
+
+
+solve.answer = 1074
 
 
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p018_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

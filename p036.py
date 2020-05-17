@@ -1,12 +1,19 @@
-'''
+"""
 The decimal number, 585 = 10010010012 (binary), is palindromic in both bases.
 
 Find the sum of all numbers, less than one million, which are palindromic in base 10 and base 2.
 
 (Please note that the palindromic number, in either base, may not include leading zeros.)
-'''
+"""
 
 from __future__ import print_function
+
+import os
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def is_double_palindromic(n):
@@ -28,11 +35,12 @@ def double_palindromic_numbers(maximum=None):
 
 
 def solve():
+    """No strategy here. Bruteforce."""
     return sum(double_palindromic_numbers(10**6))
 
 
+solve.answer = 872187
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p036_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

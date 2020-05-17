@@ -23,7 +23,7 @@ from fractions import Fraction
 from math import ceil, floor
 from itertools import combinations
 
-from lib import prod
+from utils import prod
 
 '''
 This is a relatively easy problem, but here is my approach.

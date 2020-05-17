@@ -1,4 +1,4 @@
-'''
+"""
 A perfect number is a number for which the sum of its proper divisors is exactly equal to the number.
     For example, the sum of the proper divisors of 28 would be 1 + 2 + 4 + 7 + 14 = 28,
     which means that 28 is a perfect number.
@@ -11,13 +11,20 @@ As 12 is the smallest abundant number, 1 + 2 + 3 + 4 + 6 = 16, the smallest numb
     cannot be expressed as the sum of two abundant numbers is less than this limit.
 
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
-'''
+"""
 
 from __future__ import print_function
 
+import os
 
-# Solution is inspired by p021
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
+
 def solve():
+    """The solution for this problem is inspired by problem 21."""
     def is_abundant(d, n):
         return d[n] > n
 
@@ -53,8 +60,8 @@ def solve():
     return running_sum
 
 
+solve.answer = 4179871
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p023_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

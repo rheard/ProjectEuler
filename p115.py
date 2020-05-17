@@ -23,7 +23,9 @@ For m = 50, find the least value of n for which the fill-count function
 
 from __future__ import print_function, division
 from itertools import count
-from lib import binomial
+from math import floor
+
+from utils import binomial
 
 """
 Continuing from the previous problem...

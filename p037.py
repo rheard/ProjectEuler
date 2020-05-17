@@ -1,4 +1,4 @@
-'''
+"""
 The number 3797 has an interesting property. Being prime itself,
     it is possible to continuously remove digits from left to right,
     and remain prime at each stage: 3797, 797, 97, and 7.
@@ -7,14 +7,21 @@ The number 3797 has an interesting property. Being prime itself,
 Find the sum of the only eleven primes that are both truncatable from left to right and right to left.
 
 NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
-'''
-
-# We're given there are 11, so do not use a fixed upper limit. Just iterate till we find 11.
+"""
 
 from __future__ import print_function
-from sympy import Sieve, isprime
+
+import os
+
 from math import log10, floor
 from itertools import count
+
+from sympy import Sieve, isprime
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def two_sided_primes():
@@ -44,12 +51,13 @@ def two_sided_primes():
 
 
 def solve():
-    gener = two_sided_primes()
-    return sum(next(gener) for x in range(11))
+    """We're given the upper limit of 11. So just go until we find 11."""
+    generator = two_sided_primes()
+    return sum(next(generator) for _ in range(11))
+
+
+solve.answer = 748317
 
 
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p037_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

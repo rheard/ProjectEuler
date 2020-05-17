@@ -1,8 +1,15 @@
-'''
+"""
 Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
-'''
+"""
 
 from __future__ import print_function
+
+import os
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 _numbers = [
     37107287533902102798797998220837590246510135740250,
@@ -104,15 +111,17 @@ _numbers = [
     77158542502016545090413245809786882778948721859617,
     72107838435069186155435662884062257473692284509516,
     20849603980134001723930671666823555245252804609722,
-    53503534226472524250874054075591789781264330331690]
+    53503534226472524250874054075591789781264330331690,
+]
 
 
 def solve():
+    """No strategy here. Bruteforce."""
     return str(sum(_numbers))[:10]
 
 
+solve.answer = 5537376230
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p013_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

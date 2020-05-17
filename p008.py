@@ -1,4 +1,4 @@
-'''
+"""
 The four adjacent digits in the 1000-digit number that have the greatest product are 9 * 9 * 8 * 9 = 5832.
 
 73167176531330624919225119674426574742355349194934
@@ -24,10 +24,16 @@ The four adjacent digits in the 1000-digit number that have the greatest product
 
 Find the thirteen adjacent digits in the 1000-digit number that have the greatest product.
     What is the value of this product?
-'''
+"""
 
 from __future__ import print_function
-from lib import prod
+
+import os
+
+try:
+    from .utils import output_answer, prod
+except ImportError:
+    from utils import output_answer, prod
 
 _target_number = '''73167176531330624919225119674426574742355349194934
 96983520312774506326239578318016984801869478851843
@@ -51,9 +57,8 @@ _target_number = '''73167176531330624919225119674426574742355349194934
 71636269561882670428252483600823257530420752963450'''.replace('\n', '')
 
 
-# Takes in a target number and the n-adjacent numbers to search for
-# Returns the highest proeduct
 def n_adjacent(number, n):
+    """Takes in a target number and the n-adjacent numbers to search for. Returns the highest product."""
     number = str(number)
     highest_product = 0
     for i in range(len(number) - n + 1):
@@ -65,11 +70,12 @@ def n_adjacent(number, n):
 
 
 def solve(n=13):
+    """No strategy here. Bruteforce."""
     return n_adjacent(_target_number, n)
 
 
+solve.answer = 23514624000
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p008_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

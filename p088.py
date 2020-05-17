@@ -26,7 +26,7 @@ from sympy.utilities.iterables import kbins
 from sympy import factorint
 from itertools import count
 
-from lib import prod
+from utils import prod
 
 '''
 The key to solving this problem is that any product of a number can be turned into a sum of that number by

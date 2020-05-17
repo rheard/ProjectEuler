@@ -1,4 +1,4 @@
-'''
+"""
 In the 20*20 grid below, four numbers along a diagonal line have been marked in red.
 
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -26,12 +26,18 @@ The product of these numbers is 26 * 63 * 78 * 14 = 1788696.
 
 What is the greatest product of four adjacent numbers in the same direction
     (up, down, left, right, or diagonally) in the 20*20 grid?
-'''
+"""
 
 from __future__ import print_function
-from lib import prod
 
-_raw_puzzle = '''08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
+import os
+
+try:
+    from utils import output_answer, prod
+except ImportError:
+    from .utils import output_answer, prod
+
+__RAW_PUZZLE = '''08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
 81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
 52 70 95 23 04 60 11 42 69 24 68 56 01 32 56 71 37 02 36 91
@@ -52,7 +58,7 @@ _raw_puzzle = '''08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48'''
 
-_puzzle = [[int(x) for x in line.split()] for line in _raw_puzzle.split('\n')]
+__PUZZLE = [[int(x) for x in line.split()] for line in __RAW_PUZZLE.split('\n')]
 
 
 def wrap_indexer(puzzle, x, y):
@@ -61,15 +67,31 @@ def wrap_indexer(puzzle, x, y):
     return puzzle[y][x]
 
 
-def solve(puzzle=_puzzle, n=4):
+def solve(puzzle=None, n=4):
+    """
+    Computing the product going down from 1 cell is the same as computing the product going up from another cell.
+        So half of the computations are eliminated if we hit every cell.
+
+    So, go to every cell and compute the product in 4 directions. Highest wins.
+
+    Args:
+        puzzle (List<List<int>> or None): A matrix consisting of the puzzle.
+            Defaults to None, which will load the default puzzle.
+        n (int): The number of integers to multiply. Defaults to 4.
+    """
     highest_product = 0
+    puzzle = puzzle or __PUZZLE
 
     for y, line in enumerate(puzzle):
         for x, value in enumerate(line):
-            highest_new_product = max([prod(wrap_indexer(puzzle, x + i, y) for i in range(n)),       # horiz_right_product
-                                       prod(wrap_indexer(puzzle, x, y + i) for i in range(n)),       # vert_down_product
-                                       prod(wrap_indexer(puzzle, x + i, y + i) for i in range(n)),   # horiz_right_down_product
-                                       prod(wrap_indexer(puzzle, x - i, y + i) for i in range(n))])  # horiz_left_down_product
+            # If we compute the product going down, then we also compute the product going up
+            #   (starting from another cell). So to compute all 8 directions, we only need to compute 4 directions.
+            highest_new_product = max(
+                [prod(wrap_indexer(puzzle, x + i, y) for i in range(n)),       # Product going right
+                 prod(wrap_indexer(puzzle, x, y + i) for i in range(n)),       # Product going down
+                 prod(wrap_indexer(puzzle, x + i, y + i) for i in range(n)),   # Product going right and down
+                 prod(wrap_indexer(puzzle, x - i, y + i) for i in range(n))]   # Product going left and down
+            )
 
             if highest_new_product > highest_product:
                 highest_product = highest_new_product
@@ -77,8 +99,8 @@ def solve(puzzle=_puzzle, n=4):
     return highest_product
 
 
+solve.answer = 70600674
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p011_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

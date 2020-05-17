@@ -26,7 +26,7 @@ If rad(n) is sorted for 1 <= n <= 100000, find E(10000).
 '''
 
 from __future__ import print_function
-from lib import prod
+from utils import prod
 from sympy import primefactors
 
 
