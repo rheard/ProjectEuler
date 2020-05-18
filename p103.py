@@ -30,18 +30,16 @@ Given that A is an optimum special sum set for n = 7, find its set string.
 NOTE: This problem is related to Problem 105 and Problem 106.
 """
 
-from __future__ import print_function
+import os
+
 from itertools import islice, combinations, count
+
 from sympy.utilities.iterables import kbins
 
-
-"""
-NOTE: I did not solve this problem using this algorithm.
-
-This problem can be solve by using the given "rule" on the correct solution for n = 6.
-
-Although, I still want to create an algorithm for this, because I need this for p105 and p106.
-"""
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def step_combinations(source, n):
@@ -94,13 +92,20 @@ def A(n):
     return _set
 
 
-def solve(n=7):
-    # return "".join(str(x) for x in A(n))
-    return '20313839404245'
+def solve():
+    """
+    NOTE: The code below is not used to solve this problem.
+
+    This problem can be solved by using the given "rule" on the correct solution for n = 6.
+
+    However I still need this code for later problems.
+    """
+    # return "".join(str(x) for x in A(7))
+    return 20313839404245
+
+
+solve.answer = 20313839404245
 
 
 if __name__ == '__main__':
-    answer = A(5)
-    print(answer)
-    with open('p103_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

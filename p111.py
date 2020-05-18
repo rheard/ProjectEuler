@@ -36,20 +36,16 @@ For d = 0 to 9, the sum of all S(4, d) is 273700.
 Find the sum of all S(10, d).
 """
 
-from __future__ import print_function
-from sympy import isprime
+import os
+
 from itertools import product, combinations
 
+from sympy import isprime
 
-"""
-Pretty easy solution.
-
-For each digit d as our repdigit, get all the possible numbers
-    consisting of n - 1 ds and 1 other digit. Are any prime?
-    If no, then repeat but with all the possible numbers consisting of 
-        n - 2 ds and 2 other digits. 
-    If yes then we found our M, N and S all at the same time.
-"""
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def M_N_S(n, d, _non=1):
@@ -84,11 +80,20 @@ def M_N_S(n, d, _non=1):
 
 
 def solve(n=10):
+    """
+    Pretty easy solution.
+
+    For each digit d as our repdigit, get all the possible numbers
+        consisting of n - 1 ds and 1 other digit. Are any prime?
+        If no, then repeat but with all the possible numbers consisting of
+            n - 2 ds and 2 other digits.
+        If yes then we found our M, N and S all at the same time.
+    """
     return sum(M_N_S(n, d)[2] for d in range(10))
 
 
+solve.answer = 612407567715
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p111_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

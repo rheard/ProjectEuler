@@ -8,8 +8,6 @@ By considering the terms in the Fibonacci sequence whose values do not exceed fo
     find the sum of the even-valued terms.
 """
 
-from __future__ import print_function
-
 import os
 
 try:

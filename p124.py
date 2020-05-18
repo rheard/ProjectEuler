@@ -1,4 +1,4 @@
-'''
+"""
 The radical of n, rad(n), is the product of the distinct prime factors of n.
     For example, 504 = 2**3 * 3**2 * 7, so rad(504) = 2 * 3 * 7 = 42.
 
@@ -23,11 +23,16 @@ Let E(k) be the kth element in the sorted n column;
     for example, E(4) = 8 and E(6) = 9.
 
 If rad(n) is sorted for 1 <= n <= 100000, find E(10000).
-'''
+"""
 
-from __future__ import print_function
-from utils import prod
+import os
+
 from sympy import primefactors
+
+try:
+    from .utils import output_answer, prod
+except ImportError:
+    from utils import output_answer, prod
 
 
 def rad(n):
@@ -35,11 +40,12 @@ def rad(n):
 
 
 def solve(n=10**4, max_n=10**5):
+    """No strategy here. Bruteforce."""
     return sorted((rad(i), i) for i in range(1, max_n + 1))[n - 1][1]
 
 
+solve.answer = 21417
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p124_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

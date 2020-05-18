@@ -47,27 +47,27 @@ Incredibly there are 42336 distinct ways of checking out in total.
 How many distinct ways can a player checkout with a score less than 100?
 """
 
-from __future__ import print_function
+import os
+
 from itertools import combinations_with_replacement, product
 
 try:
-    from sets import ImmutableSet as frozenset
+    from .utils import output_answer
 except ImportError:
-    pass
-
-"""
-This is a pretty simple solution. The only thing to keep in mind is that values are
-    unique. So although you can get a throw for a value of 2, this can happen with
-    S2 or D1, and each is unique.
-
-So we get the set of all possible combination of 2 throws and perform the product
-    of this set with the set of all the possible doubles. For each element in this
-    new set, if it's sum is less than 100, then it is a checkout to be counted. That
-    simple.
-"""
+    from utils import output_answer
 
 
 def solve(n=100):
+    """
+    This is a pretty simple solution. The only thing to keep in mind is that values are
+        unique. So although you can get a throw for a value of 2, this can happen with
+        S2 or D1, and each is unique.
+
+    So we get the set of all possible combination of 2 throws and perform the product
+        of this set with the set of all the possible doubles. For each element in this
+        new set, if it's sum is less than 100, then it is a checkout to be counted. That
+        simple.
+    """
     # Build the board.
     single_vals = list(range(1, 21)) + [25]
     double_vals = [2*x for x in single_vals]
@@ -75,12 +75,12 @@ def solve(n=100):
     total_vals = single_vals + double_vals + triple_vals + [0]
 
     return sum(1 for other_throws, double_throw
-        in product(combinations_with_replacement(total_vals, 2), double_vals, repeat=1)
-        if sum(other_throws) + double_throw < n)
+               in product(combinations_with_replacement(total_vals, 2), double_vals, repeat=1)
+               if sum(other_throws) + double_throw < n)
+
+
+solve.answer = 38182
 
 
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p109_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

@@ -1,10 +1,17 @@
-'''
-It can be seen that the number, 125874, and its double, 251748, contain exactly the same digits, but in a different order.
+"""
+It can be seen that the number, 125874, and its double, 251748, contain exactly the same digits,
+    but in a different order.
 
 Find the smallest positive integer, x, such that 2x, 3x, 4x, 5x, and 6x, contain the same digits.
-'''
+"""
 
-from __future__ import print_function
+import os
+import string
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def same_digits(i, j):
@@ -12,14 +19,7 @@ def same_digits(i, j):
     if len(i) != len(j):
         return False
 
-    set_i = set(i)
-    set_j = set(j)
-
-    # There are digits that are unique to one set, so they can't have the exact same digits.
-    if len(set_i.symmetric_difference(set_j)) != 0:
-        return False
-
-    for digit in set_i:
+    for digit in string.digits:
         # The counts of one of the digits doesn't match, so they can't have the exact same digits.
         if i.count(digit) != j.count(digit):
             return False
@@ -28,6 +28,7 @@ def same_digits(i, j):
 
 
 def solve():
+    """No strategy here. Bruteforce."""
     n = 2
     while True:
         has_same_digits_as_multiples = True
@@ -45,8 +46,8 @@ def solve():
     return n
 
 
+solve.answer = 142857
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p052_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

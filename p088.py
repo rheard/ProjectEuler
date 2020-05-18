@@ -1,4 +1,4 @@
-'''
+"""
 A natural number, N, that can be written as the sum and product of a given set of at least two natural numbers,
     {a_1, a_2, ... , a_k} is called a product-sum number: N = a_1 + a_2 + ... + a_k = a_1 * a_2 * ... * a_k.
 
@@ -19,29 +19,33 @@ Hence for 2<=k<=6, the sum of all the minimal product-sum numbers is 4+6+8+12 = 
 In fact, as the complete set of minimal product-sum numbers for 2<=k<=12 is {4, 6, 8, 12, 15, 16}, the sum is 61.
 
 What is the sum of all the minimal product-sum numbers for 2<=k<=12000?
-'''
+"""
 
-from __future__ import print_function
-from sympy.utilities.iterables import kbins
-from sympy import factorint
+import os
+
 from itertools import count
 
-from utils import prod
+from sympy.utilities.iterables import kbins
+from sympy import factorint
 
-'''
-The key to solving this problem is that any product of a number can be turned into a sum of that number by
-    adding 1's to the product. For instance, 8 = 2 * 4 = 1 * 1 * 2 * 4. The second product also has a sum of 8.
-
-From this if we generate a product of divisors of a number n, it can be converted to a k value by doing
-    k = i - sum(divisors for product) + len(divisors for product)
-
-Now to generate all possible k's for a number n we need to find all the possible products. These are the
-    multiplicative partitions of n. With a list of prime factors of n, kbins will create all the possible
-    unique partitions of the list.
-'''
+try:
+    from .utils import output_answer, prod
+except ImportError:
+    from utils import output_answer, prod
 
 
 def solve(max_k=12000, min_k=2):
+    """
+    The key to solving this problem is that any product of a number can be turned into a sum of that number by
+        adding 1's to the product. For instance, 8 = 2 * 4 = 1 * 1 * 2 * 4. The second product also has a sum of 8.
+
+    From this if we generate a product of divisors of a number n, it can be converted to a k value by doing
+        k = i - sum(divisors for product) + len(divisors for product)
+
+    Now to generate all possible k's for a number n we need to find all the possible products. These are the
+        multiplicative partitions of n. With a list of prime factors of n, kbins will create all the possible
+        unique partitions of the list.
+    """
     float_inf = float('inf')
     min_ps_numbers = [float_inf] * (max_k - min_k + 1)
 
@@ -65,8 +69,8 @@ def solve(max_k=12000, min_k=2):
     return sum(set(min_ps_numbers))
 
 
+solve.answer = 7587457
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p088_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

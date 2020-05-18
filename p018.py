@@ -32,8 +32,6 @@ NOTE: As there are only 16384 routes, it is possible to solve this problem by tr
     it cannot be solved by brute force, and requires a clever method! ;o)
 """
 
-from __future__ import print_function
-
 import os
 
 from copy import deepcopy

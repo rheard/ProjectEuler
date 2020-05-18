@@ -1,5 +1,6 @@
-'''
-Consider the fraction, n/d, where n and d are positive integers. If n<d and HCF(n,d)=1, it is called a reduced proper fraction.
+"""
+Consider the fraction, n/d, where n and d are positive integers. If n<d and HCF(n,d)=1,
+    it is called a reduced proper fraction.
 
 If we list the set of reduced proper fractions for d <= 8 in ascending order of size, we get:
 
@@ -8,19 +9,26 @@ If we list the set of reduced proper fractions for d <= 8 in ascending order of 
 It can be seen that 2/5 is the fraction immediately to the left of 3/7.
 
 By listing the set of reduced proper fractions for d <= 1,000,000 in ascending order of size,
-	find the numerator of the fraction immediately to the left of 3/7.
-'''
+    find the numerator of the fraction immediately to the left of 3/7.
+"""
 
-from __future__ import print_function
+import os
+
 from fractions import Fraction
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def solve(max_d=10**6, fraction_of_interest=Fraction(3, 7)):
-	return (fraction_of_interest - Fraction(1, max_d)).limit_denominator(max_d).numerator
+    """No strategy here. Bruteforce."""
+    return (fraction_of_interest - Fraction(1, max_d)).limit_denominator(max_d).numerator
+
+
+solve.answer = 428570
 
 
 if __name__ == '__main__':
-	answer = solve()
-	print(answer)
-	with open('p071_ans.txt', 'w') as wb:
-		wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

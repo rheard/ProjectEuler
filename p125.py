@@ -1,4 +1,4 @@
-'''
+"""
 The palindromic number 595 is interesting because it can be written
     as the sum of consecutive squares:
 
@@ -11,10 +11,16 @@ There are exactly eleven palindromes below one-thousand that can be
 
 Find the sum of all the numbers less than 108 that are both palindromic
     and can be written as the sum of consecutive squares.
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from itertools import count
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def consecutive_square_sums(max_n=10**8):
@@ -41,11 +47,12 @@ def palindrome(n):
 
 
 def solve(max_n=10**8):
+    """No strategy here. Bruteforce."""
     return sum(set(x for x in consecutive_square_sums(max_n) if palindrome(x)))
 
 
+solve.answer = 2906969179
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p125_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

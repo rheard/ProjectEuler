@@ -14,29 +14,18 @@ What is the largest square number formed by any member of such a pair?
 NOTE: All anagrams formed must be contained in the given text file.
 """
 
-from __future__ import print_function
+import os
+
 from collections import defaultdict
 from itertools import count
 
-with open('ProjectEuler/words.txt', 'r') as rb:
-    _words = [x.strip('"') for x in rb.read().split(',')]
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
-
-"""
-Here are the steps I thought of to solve this problem:
-1) Sort the words based on length. Only words that have the same length can be anagrams.
-2) Group the words based on character makeup. eg ('N', 'O') is the character makeup for 'NO' and 'ON'.
-    Only words that contain the exact same characters can be anagrams.
-3) Remove words that do not have other words with identical charcter makeups.
-4) Sort and group squares based on digit length and digit makeup, similar to how words were just done.
-    We only care about squares that have an identical length to words that are still left.
-5) Group words by the mapping between each other instead of by their character makeup.
-6) Find the mapping between squares, find word-pairs with the exact same mapping, and check that they
-    work with the rules given the current square-pair. If everything checks out, see if the square-pair
-    contains a new largest square and capture it.
-
-By the end of this, the last captured square is the largest square of interest.
-"""
+with open('ProjectEuler/p042_words.txt', 'r') as rb:
+    __WORDS = [x.strip('"') for x in rb.read().split(',')]
 
 
 def create_mapping(x, y):
@@ -55,9 +44,25 @@ def create_mapping(x, y):
     return tuple(mapping)
 
 
-def solve(words=_words):
+def solve(words=None):
+    """
+    Here are the steps I thought of to solve this problem:
+    1) Sort the words based on length. Only words that have the same length can be anagrams.
+    2) Group the words based on character makeup. eg ('N', 'O') is the character makeup for 'NO' and 'ON'.
+        Only words that contain the exact same characters can be anagrams.
+    3) Remove words that do not have other words with identical charcter makeups.
+    4) Sort and group squares based on digit length and digit makeup, similar to how words were just done.
+        We only care about squares that have an identical length to words that are still left.
+    5) Group words by the mapping between each other instead of by their character makeup.
+    6) Find the mapping between squares, find word-pairs with the exact same mapping, and check that they
+        work with the rules given the current square-pair. If everything checks out, see if the square-pair
+        contains a new largest square and capture it.
+
+    By the end of this, the last captured square is the largest square of interest.
+    """
     # First, sort all the words by their length. No use trying to map words of different lengths.
     sorted_words = defaultdict(list)
+    words = words or __WORDS
 
     for word in words:
         sorted_words[len(word)].append(word)
@@ -148,8 +153,8 @@ def solve(words=_words):
     return largest_square
 
 
+solve.answer = 18769
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p098_answer.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

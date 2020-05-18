@@ -26,24 +26,16 @@ How many different ways can the black tiles in a row measuring fifty units in
 NOTE: This is related to Problem 117.
 """
 
-from __future__ import print_function, division
-from utils import binomial
+from __future__ import division
+
+import os
+
 from math import floor
 
-"""
-We cannot use our equations from the previous problem because
- * The tiles can be touching.
- * Different size tiles cannot be mixed.
-
-The sequence of the number of arrangements for the red (2-length) tiles can be
-    found on OEIS (A000071), which is the n-th Fibonacci number minus 1. 
-    Surprisingly, a similar formula to the previous equation is found, giving...
-
-red arrangements = sum(binomial(n-k, k) for k in range(1, floor(n/2) + 1))
-
-Just as surprisingly, this can be extrapolated in a similar fashion:
-m-length arrangements = sum(binomial(n-(m-1)*k, k) for k in range(1, floor(n/m) + 1))
-"""
+try:
+    from .utils import output_answer, binomial
+except ImportError:
+    from utils import output_answer, binomial
 
 
 def arrangements(n, m):
@@ -51,11 +43,25 @@ def arrangements(n, m):
 
 
 def solve(n=50):
+    """
+    We cannot use our equations from the previous problem because
+     * The tiles can be touching.
+     * Different size tiles cannot be mixed.
+
+    The sequence of the number of arrangements for the red (2-length) tiles can be
+        found on OEIS (A000071), which is the n-th Fibonacci number minus 1.
+        Surprisingly, a similar formula to the previous equation is found, giving...
+
+    red arrangements = sum(binomial(n-k, k) for k in range(1, floor(n/2) + 1))
+
+    Just as surprisingly, this can be extrapolated in a similar fashion:
+    m-length arrangements = sum(binomial(n-(m-1)*k, k) for k in range(1, floor(n/m) + 1))
+    """
     return int(arrangements(n, 2) + arrangements(n, 3) + arrangements(n, 4))
 
 
+solve.answer = 20492570929
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p116_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

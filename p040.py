@@ -10,8 +10,6 @@ If d_n represents the nth digit of the fractional part, find the value of the fo
 d_1 * d_10 * d_100 * d_1000 * d_10000 * d_100000 * d_1000000
 """
 
-from __future__ import print_function
-
 import os
 
 try:

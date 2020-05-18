@@ -8,8 +8,6 @@ There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 Find the product abc.
 """
 
-from __future__ import print_function
-
 import os
 
 from collections import deque

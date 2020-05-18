@@ -14,7 +14,7 @@ except ImportError:
     from fractions import gcd as _gcd
 
 __all__ = ['prod', 'PHI', 'fibonacci', 'fibonacci_generator', 'triangle_generator', 'triangle', 'gcd', 'lcm',
-           'binomial', 'output_answer']
+           'binomial', 'output_answer', 'human_readable_time']
 
 prod = lambda x: functools.reduce(operator.mul, x, 1)
 PHI = (1 + math.sqrt(5)) / 2
@@ -29,10 +29,10 @@ def human_readable_time(seconds):
     output = []
 
     if hours:
-        output.append('{} hours'.format(hours))
+        output.append('{} hours'.format(int(hours)))
 
     if minutes:
-        output.append('{} minutes'.format(minutes))
+        output.append('{} minutes'.format(int(minutes)))
 
     # If seconds is 0, we don't to output it,
     #   UNLESS there is no other output, then we will output "0 seconds"

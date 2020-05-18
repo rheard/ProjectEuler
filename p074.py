@@ -1,4 +1,4 @@
-'''
+"""
 The number 145 is well known for the property that the sum of the factorial of its digits is equal to 145:
 
 1! + 4! + 5! = 1 + 24 + 120 = 145
@@ -20,10 +20,16 @@ Starting with 69 produces a chain of five non-repeating terms,
     but the longest non-repeating chain with a starting number below one million is sixty terms.
 
 How many chains, with a starting number below one million, contain exactly sixty non-repeating terms?
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from math import factorial
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 _chain_counts = {145: 1,
                  169: 3,
@@ -43,11 +49,17 @@ def chain_count(n):
 
 
 def solve(n=10**6, chain_len=60):
+    """
+    The solution to this problem is similar to the solution to problem 14.
+
+    When we compute the chain length for a number, that chain length is the same for all numbers in the chain, and they
+        can be cached.
+    """
     return sum(1 for x in range(1, n) if chain_count(x) == chain_len)
 
 
+solve.answer = 402
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p074_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

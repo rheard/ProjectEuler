@@ -1,19 +1,17 @@
-from __future__ import print_function, division
-from math import atan2, pi, degrees
+from __future__ import division
 
-"""
-Here is how I'm going to approach this problem. If all points are on 1 side of the origin,
-    then the origin is not contained in the triangle. To put this more formally,
-    if the angle from the origin to each point (with respect to the x-axis) are all within
-    180 degrees of each other, then the origin is not contained in the triangle.
+import os
 
-Note: In the following code, degrees are not used. Everyone knows angles ought to be
-    measured in radians.
-"""
+from math import atan2, pi
 
-with open('ProjectEuler/triangles.txt', 'r') as rb:
-    _triangles = [list(map(int, line.split(','))) for line in rb.readlines()]
-    _triangles = [list(zip(*[triangle[i::2] for i in range(2)])) for triangle in _triangles]
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
+with open('ProjectEuler/p102_triangles.txt', 'r') as rb:
+    __TRIANGLES = [list(map(int, line.split(','))) for line in rb.readlines()]
+    __TRIANGLES = [list(zip(*[triangle[i::2] for i in range(2)])) for triangle in __TRIANGLES]
 
 
 def origin_contained(triangle):
@@ -41,12 +39,22 @@ def origin_contained(triangle):
     return not all(angle > pi for angle in angles if angle != 0)
 
 
-def solve(triangles=_triangles):
+def solve(triangles=None):
+    """
+    Here is how I'm going to approach this problem. If all points are on 1 side of the origin,
+        then the origin is not contained in the triangle. To put this more formally,
+        if the angle from the origin to each point (with respect to the x-axis) are all within
+        180 degrees of each other, then the origin is not contained in the triangle.
+
+    Note: In the following code, degrees are not used. Everyone knows angles ought to be
+        measured in radians.
+    """
+    triangles = triangles or __TRIANGLES
     return sum(1 for triangle in triangles if origin_contained(triangle))
 
 
+solve.answer = 228
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p102_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

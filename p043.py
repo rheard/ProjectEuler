@@ -14,8 +14,6 @@ d_8*d_9*d_10=289 is divisible by 17
 Find the sum of all 0 to 9 pandigital numbers with this property.
 """
 
-from __future__ import print_function
-
 import os
 import string
 

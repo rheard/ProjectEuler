@@ -1,4 +1,4 @@
-'''
+"""
 The number 512 is interesting because it is equal to the sum of its digits
     raised to some power: 5 + 1 + 2 = 8, and 8**3 = 512.
     Another example of a number with this property is 614656 = 28**4.
@@ -9,26 +9,17 @@ We shall define an to be the nth term of this sequence and insist
 You are given that a_2 = 512 and a_10 = 614656.
 
 Find a_30.
-'''
+"""
 
-from __future__ import print_function
-from collections import deque, defaultdict
+import os
+
+from collections import defaultdict
 from itertools import count
 
-
-'''
-Quite simple solution.
-
-power_generator() will generate all powers in order.
-a() will take all those and only yield the ones that match the
-    problem condition.
-solve() will then count those to get to the required n.
-
-Unfortunately, after a lot of optimization, this still takes ~2 minutes
-    to run. This isn't completely absurd and I can't figure out how to
-    optimize furthur. Everything is sequential, so parallization is off
-    the table.
-'''
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def power_generator():
@@ -71,14 +62,27 @@ def a():
 
 
 def solve(n=30):
+    """
+    Quite a simple solution.
+
+    power_generator() will generate all powers in order.
+    a() will take all those and only yield the ones that match the
+        problem condition.
+    solve() will then count those to get to the required n.
+
+    Unfortunately, after a lot of optimization, this still takes ~2 minutes
+        to run. This isn't completely absurd and I can't figure out how to
+        optimize furthur. Everything is sequential, so parallization is off
+        the table.
+    """
     n -= 1
     for i, num in enumerate(a()):
         if i == n:
             return num
 
 
+solve.answer = 248155780267521
+
+
 if __name__ == '__main__':
-    answer = solve(25)
-    print(answer)
-    with open('p119_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

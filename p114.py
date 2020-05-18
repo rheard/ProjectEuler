@@ -20,29 +20,34 @@ NOTE: Although the example above does not lend itself to the possibility,
     and red (4).
 """
 
-from __future__ import print_function, division
+from __future__ import division
+
+import os
+
 from math import floor
 
-from utils import binomial
-
-"""
-Brute forcing this problem for all 50 units is too inefficient.
-
-However all in the range(2, 11) can be solved by brute force and printed.
-    This yields the sequence [1, 2, 4, 7, 11, 17, 27, 44, 72, ...]
-
-After searching on OEIS this is sequnce A005252, which has the formula:
-    sum(binomial(n - 2*k, 2*k) for k in range(floor(n/4) + 1))
-    where n = l + 1
-"""
+try:
+    from .utils import output_answer, binomial
+except ImportError:
+    from utils import output_answer, binomial
 
 
 def solve(n=50):
+    """
+    Brute forcing this problem for all 50 units is too inefficient.
+
+    However all in the range(2, 11) can be solved by brute force and printed.
+        This yields the sequence [1, 2, 4, 7, 11, 17, 27, 44, 72, ...]
+
+    After searching on OEIS this is sequnce A005252, which has the formula:
+        sum(binomial(n - 2*k, 2*k) for k in range(floor(n/4) + 1))
+        where n = l + 1
+    """
     return int(sum(binomial(n - 2*k + 1, 2*k) for k in range(floor((n + 1)/4) + 1)))
 
 
+solve.answer = 16475640049
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p114_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

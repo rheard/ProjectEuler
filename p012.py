@@ -18,8 +18,6 @@ We can see that 28 is the first triangle number to have over five divisors.
 What is the value of the first triangle number to have over five hundred divisors?
 """
 
-from __future__ import print_function
-
 import os
 
 from sympy import divisors

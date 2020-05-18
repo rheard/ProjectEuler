@@ -1,4 +1,4 @@
-'''
+"""
 Consider the following "magic" 3-gon ring, filled with the numbers 1 to 6, and each line adding to nine.
 
   4
@@ -9,8 +9,9 @@ Consider the following "magic" 3-gon ring, filled with the numbers 1 to 6, and e
  /
 5
 
-Working clockwise, and starting from the group of three with the numerically lowest external node (4,3,2 in this example),
-    each solution can be described uniquely. For example, the above solution can be described by the set: 4,3,2; 6,2,1; 5,1,3.
+Working clockwise, and starting from the group of three with the numerically lowest external node
+    (4,3,2 in this example), each solution can be described uniquely. For example, the above solution can be described
+    by the set: 4,3,2; 6,2,1; 5,1,3.
 
 It is possible to complete the ring with four different totals: 9, 10, 11, and 12. There are eight solutions in total.
 
@@ -27,10 +28,17 @@ By concatenating each group it is possible to form 9-digit strings; the maximum 
 
 Using the numbers 1 to 10, and depending on arrangements, it is possible to form 16- and 17-digit strings.
     What is the maximum 16-digit string for a "magic" 5-gon ring?
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from itertools import permutations
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
 
 _wrap_ring = lambda inside, i: inside[i % len(inside)]
 
@@ -58,6 +66,7 @@ def concatenate_solution(solution):
 
 
 def solve(n=5):
+    """We generate possible inside groups, possible outside groups, and then try to match them up."""
     # The following 2 assumptions depend on 2 facts:
     #   We want to maximize the concatenated string
     #   We only want 2 digit numbers once
@@ -79,8 +88,8 @@ def solve(n=5):
     return max(int(concatenate_solution(solution)) for solution in working_rings)
 
 
+solve.answer = 6531031914842725
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p068_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

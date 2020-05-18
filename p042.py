@@ -12,8 +12,6 @@ Using words.txt (right click and 'Save Link/Target As...'), a 16K text file cont
     common English words, how many are triangle words?
 """
 
-from __future__ import print_function
-
 import os
 
 try:
@@ -22,7 +20,7 @@ except ImportError:
     from utils import output_answer, triangle
 
 
-with open('ProjectEuler/words.txt', 'r') as rb:
+with open('ProjectEuler/p042_words.txt', 'r') as rb:
     __WORDS = [x.strip('"') for x in rb.read().split(',')]
 
 

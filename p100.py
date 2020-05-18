@@ -10,42 +10,49 @@ By finding the first arrangement to contain over 10**12 = 1,000,000,000,000 disc
     determine the number of blue discs that the box would contain.
 """
 
-from __future__ import print_function, division
+from __future__ import division
+
+import os
+
 from itertools import count
 from decimal import Decimal, ROUND_CEILING
 
-"""
-To start solving this, we should do a little bit of math. We should think of this problem as...
-    0.5 = (a / b) * ((a - 1) / (b - 1))
-    0.5 = a*(a - 1) / b*(b - 1)
-    b*(b - 1) = 2*a*(a - 1)
-where a, b are both integers.
-
-This is interesting. If we were to solve for b though we would see that:
-    a = 0.5 * sqrt(2*b**2 - 2*b + 1) + 0.5
-
-It can be seen that sqrt(2*b**2 - 2*b + 1) must be odd. Since only odd numbers squared produce
-    odd squares,  2*b**2 - 2*b + 1 must also be odd. It can be proved however that 2*b**2 - 2*b + 1
-    is always odd, so this is irrelevant.
-
-It can be found that for a to be an integer, b must be 1, 4, 21, 120, 697. This is OEIS A046090,
-    which has the following formula:
-
-b = 1/2 + ((1-2^{1/2})/4)*(3 - 2^{3/2})^i + ((1+2^{1/2})/4)*(3 + 2^{3/2})^i
-
-or if we define w,x,y,z such that:
-w = (1-2**(1/2)) / 4
-x = 3 - 2**(3/2)
-y = (1+2**(1/2)) / 4
-z = 3 + 2**(3/2)
-
-then
-
-b = 0.5 + y*w**i + x*z**i
-"""
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def solve(n=10**12):
+    """
+    To start solving this, we should do a little bit of math. We should think of this problem as...
+        0.5 = (a / b) * ((a - 1) / (b - 1))
+        0.5 = a*(a - 1) / b*(b - 1)
+        b*(b - 1) = 2*a*(a - 1)
+    where a, b are both integers.
+
+    This is interesting. If we were to solve for b though we would see that:
+        a = 0.5 * sqrt(2*b**2 - 2*b + 1) + 0.5
+
+    It can be seen that sqrt(2*b**2 - 2*b + 1) must be odd. Since only odd numbers squared produce
+        odd squares,  2*b**2 - 2*b + 1 must also be odd. It can be proved however that 2*b**2 - 2*b + 1
+        is always odd, so this is irrelevant.
+
+    It can be found that for a to be an integer, b must be 1, 4, 21, 120, 697. This is OEIS A046090,
+        which has the following formula:
+
+    b = 1/2 + ((1-2^{1/2})/4)*(3 - 2^{3/2})^i + ((1+2^{1/2})/4)*(3 + 2^{3/2})^i
+
+    or if we define w,x,y,z such that:
+    w = (1-2**(1/2)) / 4
+    x = 3 - 2**(3/2)
+    y = (1+2**(1/2)) / 4
+    z = 3 + 2**(3/2)
+
+    then
+
+    b = 0.5 + y*w**i + x*z**i
+    """
     w = (1 - Decimal(2).sqrt()) / 4
     x = 3 - Decimal(2).sqrt()**3
     y = (1 + Decimal(2).sqrt()) / 4
@@ -64,8 +71,8 @@ def solve(n=10**12):
             return int(a.to_integral_value())
 
 
+solve.answer = 756872327473
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p100_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

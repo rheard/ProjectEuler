@@ -1,4 +1,4 @@
-'''
+"""
 Comparing two numbers written in index form like 2**11 and 3**7 is not difficult,
     as any calculator would confirm that 2**11 = 2048 < 3**7 = 2187.
 
@@ -9,16 +9,28 @@ Using base_exp.txt (right click and 'Save Link/Target As...'), a 22K text file c
     with a base/exponent pair on each line, determine which line number has the greatest numerical value.
 
 NOTE: The first two lines in the file represent the numbers in the example given above.
-'''
+"""
 
-from __future__ import print_function, division
+from __future__ import division
 
-with open('ProjectEuler/base_exp.txt', 'r') as rb:
-    global _num_exponents
-    _num_exponents = [list(int(i) for i in x.strip().split(',')) for x in rb.readlines()]
+import os
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
+with open('ProjectEuler/p099_base_exp.txt', 'r') as rb:
+    __NUM_EXPONENTS = [list(int(i) for i in x.strip().split(',')) for x in rb.readlines()]
 
 
-def solve(num_exponents=_num_exponents):
+def solve(num_exponents=None):
+    """
+    We can reduce all the exponents by dividing them by the greatest exponent.
+
+    From there, it is much simpler to do the full computation on the reduced numbers.
+    """
+    num_exponents = num_exponents or __NUM_EXPONENTS
     minimum_exponent = min(x for x in num_exponents[1])
     for number in num_exponents:
         number[1] /= minimum_exponent
@@ -28,8 +40,8 @@ def solve(num_exponents=_num_exponents):
     return numbers.index(max(numbers)) + 1
 
 
+solve.answer = 709
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p099_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

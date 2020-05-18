@@ -1,4 +1,4 @@
-'''
+"""
 By starting at the top of the triangle below and moving to adjacent numbers on the row below,
     the maximum total from top to bottom is 23.
 
@@ -15,19 +15,32 @@ Find the maximum total from top to bottom in triangle.txt (right click and 'Save
 NOTE: This is a much more difficult version of Problem 18. It is not possible to try every route to solve this problem,
     as there are 2**99 altogether! If you could check one trillion (10**12) routes every second it would take over twenty
     billion years to check them all. There is an efficient algorithm to solve it. ;o)
-'''
+"""
 
-from __future__ import print_function
-from p018 import solve
+import os
 
-_puzzle = []
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
-with open('ProjectEuler/triangle.txt', 'r') as rb:
-    _puzzle = [[int(x) for x in line.strip().split(' ')] for line in rb.readlines()]
+try:
+    from .p018 import solve as _solve
+except ImportError:
+    from p018 import solve as _solve
+
+
+with open('ProjectEuler/p067_triangle.txt', 'r') as rb:
+    __PUZZLE = [[int(x) for x in line.strip().split(' ')] for line in rb.readlines()]
+
+
+def solve(puzzle=None):
+    return _solve(puzzle or __PUZZLE)
+
+
+solve.__doc__ = _solve.__doc__
+solve.answer = 7273
 
 
 if __name__ == '__main__':
-    answer = solve(_puzzle)
-    print(answer)
-    with open('p067_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

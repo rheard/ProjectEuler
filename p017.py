@@ -11,8 +11,6 @@ NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-
     compliance with British usage.
 """
 
-from __future__ import print_function
-
 import os
 
 try:

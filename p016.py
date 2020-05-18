@@ -4,8 +4,6 @@
 What is the sum of the digits of the number 2**1000?
 """
 
-from __future__ import print_function
-
 import os
 
 try:

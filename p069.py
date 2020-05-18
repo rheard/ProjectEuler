@@ -1,4 +1,4 @@
-'''
+"""
 Euler's Totient function, phi(n),
     is used to determine the number of numbers less than n which are relatively prime to n.
     For example, as 1, 2, 4, 5, 7, and 8, are all less than nine and relatively prime to nine, phi(9)=6.
@@ -16,26 +16,32 @@ n   Relatively Prime    phi(n)  n/phi(n)
 It can be seen that n=6 produces a maximum n/phi(n) for n <= 10.
 
 Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from itertools import count
+
 from sympy import prime
 
-'''
-phi(n) = n * prod(1 - 1/p for p in primefactors(n))
-n / phi(n) = 1 / prod(1 - 1/p for p in primefactors(n))
-
-The maximum value will occur when we minimize the product.
-This will occur with the most product operations,
-    since each multiplication is less than 1, each multiplication brings the value down.
-
-In order to minize the product, we need the most prime factors. So the n with the most
-    prime factors will work.
-'''
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def solve(max_n=10**6):
+    """
+    phi(n) = n * prod(1 - 1/p for p in primefactors(n))
+    n / phi(n) = 1 / prod(1 - 1/p for p in primefactors(n))
+
+    The maximum value will occur when we minimize the product.
+    This will occur with the most product operations,
+        since each multiplication is less than 1, each multiplication brings the value down.
+
+    In order to minize the product, we need the most prime factors. So the n with the most
+        prime factors will work.
+    """
     n = 1
 
     for i in count(1):
@@ -49,8 +55,8 @@ def solve(max_n=10**6):
             n = new_n
 
 
+solve.answer = 510510
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p069_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

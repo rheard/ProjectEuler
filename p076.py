@@ -1,4 +1,4 @@
-'''
+"""
 It is possible to write five as a sum in exactly six different ways:
 
 4 + 1
@@ -9,12 +9,20 @@ It is possible to write five as a sum in exactly six different ways:
 1 + 1 + 1 + 1 + 1
 
 How many different ways can one hundred be written as a sum of at least two positive integers?
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from itertools import count
 
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
 _p_vals = {0: 1}
+
+
 def p(n):
     if n not in _p_vals:
         running_sum = 0
@@ -37,11 +45,17 @@ def p(n):
 
 
 def solve(n=100):
+    """
+    Solving for the first few values of n and searching on OEIS for the sequence, we're greated with A000041.
+
+    This is the partitioning problem that Ramanujan worked on. OEIS gives several formulas for this, but the one that
+        I chose has to do with generalized pentagonal numbers
+    """
     return p(n) - 1
 
 
+solve.answer = 190569291
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p076_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

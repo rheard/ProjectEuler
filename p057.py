@@ -1,4 +1,4 @@
-'''
+"""
 It is possible to show that the square root of two can be expressed as an infinite continued fraction.
 
 sqrt(2) = 1 + 1/(2 + 1/(2 + 1/(2 + ... ))) = 1.414213...
@@ -14,13 +14,20 @@ The next three expansions are 99/70, 239/169, and 577/408, but the eighth expans
     is the first example where the number of digits in the numerator exceeds the number of digits in the denominator.
 
 In the first one-thousand expansions, how many fractions contain a numerator with more digits than denominator?
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from fractions import Fraction
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def solve(n=1000):
+    """No strategy here. Bruteforce."""
     property_count = 0
     continued_fraction = Fraction(1, 2)
 
@@ -35,8 +42,8 @@ def solve(n=1000):
     return property_count
 
 
+solve.answer = 153
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p057_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

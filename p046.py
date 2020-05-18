@@ -14,8 +14,6 @@ It turns out that the conjecture was false.
 What is the smallest odd composite that cannot be written as the sum of a prime and twice a square?
 """
 
-from __future__ import print_function
-
 import os
 
 from itertools import count

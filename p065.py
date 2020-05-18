@@ -1,12 +1,12 @@
-'''
+"""
 The square root of 2 can be written as an infinite continued fraction.
 
 sqrt(2) = 1 + (1/(2 + 1/(2 + 1/(2 + ...))))
 The infinite continued fraction can be written, sqrt(2) = [1;(2)], (2) indicates that 2 repeats ad infinitum.
     In a similar way, sqrt(23) = [4;(1,3,1,8)].
 
-It turns out that the sequence of partial values of continued fractions for square roots provide the best rational approximations.
-    Let us consider the convergents for sqrt(2).
+It turns out that the sequence of partial values of continued fractions for square roots provide the best rational
+    approximations. Let us consider the convergents for sqrt(2).
 
 1 + (1/2) = 3/2
 
@@ -26,11 +26,17 @@ The first ten terms in the sequence of convergents for e are:
 The sum of digits in the numerator of the 10th convergent is 1+4+5+7=17.
 
 Find the sum of digits in the numerator of the 100th convergent of the continued fraction for e.
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from fractions import Fraction
 from itertools import count
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def continued_fraction_approx(n, gen):
@@ -53,6 +59,9 @@ def continued_fraction_approx(n, gen):
 
 
 def solve(n=100):
+    """
+    From what we've learned with the last problem, it is easy to find a continued fraction expansion of e online.
+    """
     def e_approx_generator():
         for k in count(2, 2):
             yield 1
@@ -68,8 +77,8 @@ def solve(n=100):
     return sum(int(x) for x in str(this_iter.numerator))
 
 
+solve.answer = 272
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p065_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

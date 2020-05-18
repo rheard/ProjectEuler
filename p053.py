@@ -1,4 +1,4 @@
-'''
+"""
 There are exactly ten ways of selecting three from five, 12345:
 
 123, 124, 125, 134, 135, 145, 234, 235, 245, and 345
@@ -15,28 +15,31 @@ where r <= n, n! = n * (n-1) * ... * 3 * 2 * 1, and 0! = 1.
 It is not until n = 23, that a value exceeds one-million: ^23C_10 = 1144066.
 
 How many, not necessarily distinct, values of  ^nC_r, for 1 <= n <= 100, are greater than one-million?
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from math import factorial
 
-
-def C(n, r):
-    return factorial(n) / (factorial(r) * factorial(n - r))
+try:
+    from .utils import output_answer, binomial
+except ImportError:
+    from utils import output_answer, binomial
 
 
 def solve():
+    """The only "strategy" here is to use an efficient binomial function."""
     count = 0
     for n in range(1, 101):
         for r in range(1, n + 1):
-            if C(n, r) > 1000000:
+            if binomial(n, r) > 1000000:
                 count += 1
 
     return count
 
 
+solve.answer = 4075
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p053_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

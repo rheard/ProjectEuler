@@ -1,4 +1,4 @@
-'''
+"""
 By counting carefully it can be seen that a rectangular grid measuring 3 by 2 contains eighteen rectangles:
 
 * * . .     * * * .     * * * *
@@ -15,33 +15,41 @@ By counting carefully it can be seen that a rectangular grid measuring 3 by 2 co
 
 Although there exists no rectangular grid that contains exactly two million rectangles,
     find the area of the grid with the nearest solution.
-'''
+"""
+
+import os
 
 from math import ceil, sqrt
 
-'''
-The formula can be derived as follows:
-
-Start with a 4 x 1 as an example.
-* * . . .       * * * . .       * * * * .       * * * * *
-* * . . .       * * * . .       * * * * .       * * * * *
-    4               3               2               1
-
-So for n x 1, solution is sum(x for x in [1, ..., n]) which is known to be n * (n + 1) / 2
-
-The same formula can be derived for a 1 x m. By performing the area between these the formulas:
-(n * (n + 1) / 2) * (m * (m + 1) / 2) = n * m * (n + 1) * (m + 1) / 4 = count
-
-Thus, we want
-n * m * (n + 1) * (m + 1) / 4 = target_count
-    where target_count = 2 * 10**6
-max_n * min_m * (max_n + 1) * (min_m + 1) = target_count
-Since min_m = 1, it follows:
-max_n = +/- sqrt(8 * target_count + 1) / 2 - 1/2
-'''
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def solve(target_count=2 * 10**6):
+    """
+    The formula can be derived as follows:
+
+    Start with a 4 x 1 as an example.
+    * * . . .       * * * . .       * * * * .       * * * * *
+    * * . . .       * * * . .       * * * * .       * * * * *
+        4               3               2               1
+
+    So for n x 1, solution is sum(x for x in [1, ..., n]) which is known to be n * (n + 1) / 2
+
+    The same formula can be derived for a 1 x m. By performing the area between these the formulas:
+    (n * (n + 1) / 2) * (m * (m + 1) / 2) = n * m * (n + 1) * (m + 1) / 4 = count
+
+    Thus, we want to get as close as possible to
+    n * m * (n + 1) * (m + 1) / 4 = target_count
+        where target_count = 2 * 10**6
+
+    We can restrict our m and n ranges by doing:
+        max_n * min_m * (max_n + 1) * (min_m + 1) = target_count
+        Since min_m = 1, it follows:
+        max_n = +/- sqrt(8 * target_count + 1) / 2 - 1/2
+    """
     closest_count_area = 0
     closest_count_difference = target_count
 
@@ -62,8 +70,8 @@ def solve(target_count=2 * 10**6):
     return closest_count_area
 
 
+solve.answer = 2772
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p085_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

@@ -26,25 +26,13 @@ How many different ways can the black tiles in a row measuring fifty units in
 NOTE: This is related to Problem 117.
 """
 
-from __future__ import print_function
+import os
 
-"""
-Problem 116 is a subset of this problem.
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
-It was already observed thaat problem 116 has a strong link
-    to the Fibonacci numbers, because for the red blocks of length 2,
-    the number of ways to tile them on an n-length grid is equal to the
-    nth Fibonacci number - 1.
-
-After writing a script to find the lower values of this problem for n,
-    OEIS reveals the answer for this problem also is linked to Fibnocci numbers.
-    Specifically, for a grid of length n, the answer is given as the nth
-    tetranacci number (with an offset of 3). 
-
-As hard as I tried, I could not transform the equation for problem 116 to
-    tetranacci numbers. There must be some underlying mathematical principle
-    connecting them.
-"""
 
 def tetranacci():
     a_0 = a_1 = a_2 = 0
@@ -56,13 +44,30 @@ def tetranacci():
 
 
 def solve(n=50):
+    """
+    Problem 116 is a subset of this problem.
+
+    It was already observed thaat problem 116 has a strong link
+        to the Fibonacci numbers, because for the red blocks of length 2,
+        the number of ways to tile them on an n-length grid is equal to the
+        nth Fibonacci number - 1.
+
+    After writing a script to find the lower values of this problem for n,
+        OEIS reveals the answer for this problem also is linked to Fibnocci numbers.
+        Specifically, for a grid of length n, the answer is given as the nth
+        tetranacci number (with an offset of 3).
+
+    As hard as I tried, I could not transform the equation for problem 116 to
+        tetranacci numbers. There must be some underlying mathematical principle
+        connecting them.
+    """
     for k, v in enumerate(tetranacci()):
         if k == n:
             return v
 
 
+solve.answer = 100808458960497
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p117_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

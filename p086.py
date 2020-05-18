@@ -1,4 +1,4 @@
-'''
+"""
 A spider, S, sits in one corner of a cuboid room, measuring 6 by 5 by 3, and a fly, F,
     sits in the opposite corner. By travelling on the surfaces of the room the shortest
     "straight line" distance from S to F is 10 and the path is shown on the diagram.
@@ -15,27 +15,17 @@ It can be shown that there are exactly 2060 distinct cuboids, ignoring rotations
     solutions when M = 99 is 1975.
 
 Find the least value of M such that the number of solutions first exceeds one million.
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from math import sqrt
 from itertools import count
 
-'''
-If we call the room a cube and reduce the cube to a net, then the shortest distance is the
-    hypotenuse of a triangle.
-
-It may be possible to use the equations from problem 75 to solve this, however it gets too
-    messy too fast, my math is not reliable enough to come up with a working solution,
-    and this is fast enough.
-
-For this, we are just going to generate all possible 'rooms' with length M until the sum
-    reaches the desired value. To find the amount for a particular M,
-    cycle through all w+h for all w+h in 2 * M. If there is an integer hypotenuse
-    then we must find out the number of possible w+h for this M that we care about.
-    If the w+h is less than l, it is easy to see we must include them all.
-    If not, w must be between h and M.
-'''
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def count_for_M(M):
@@ -50,6 +40,21 @@ def count_for_M(M):
 
 
 def solve(distict_count=10**6):
+    """
+    If we call the room a cube and reduce the cube to a net, then the shortest distance is the
+        hypotenuse of a triangle.
+
+    It may be possible to use the equations from problem 75 to solve this, however it gets too
+        messy too fast, my math is not reliable enough to come up with a working solution,
+        and this is fast enough.
+
+    For this, we are just going to generate all possible 'rooms' with length M until the sum
+        reaches the desired value. To find the amount for a particular M,
+        cycle through all w+h for all w+h in 2 * M. If there is an integer hypotenuse
+        then we must find out the number of possible w+h for this M that we care about.
+        If the w+h is less than l, it is easy to see we must include them all.
+        If not, w must be between h and M.
+    """
     running_sum = 0
 
     for M in count(1):
@@ -58,8 +63,8 @@ def solve(distict_count=10**6):
             return M
 
 
+solve.answer = 1818
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p086_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

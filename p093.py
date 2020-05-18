@@ -1,4 +1,4 @@
-'''
+"""
 By using each of the digits from the set, {1, 2, 3, 4}, exactly once, and making use of the four arithmetic operations
     (+, -, *, /) and brackets/parentheses, it is possible to form different positive integer targets.
 
@@ -16,27 +16,19 @@ Using the set, {1, 2, 3, 4}, it is possible to obtain thirty-one different targe
 
 Find the set of four distinct digits, a < b < c < d, for which the longest set of consecutive positive integers, 1 to n,
     can be obtained, giving your answer as a string: abcd.
-'''
+"""
 
-from __future__ import print_function
-from itertools import combinations, product, count
-from sympy.utilities.iterables import kbins
 import operator
+import os
 
-'''
-To start with, since we are looking at digits, we are only concerned with the numbers 0 to 9. Also since
-    a < b < c < d, we only care about the combinations and not the permutations of these.
+from itertools import combinations, product, count
 
-For each combination of a,b,c,d we generate all possible trees. For example,
-    operator
-operator operator
-a      b c      d
+from sympy.utilities.iterables import kbins
 
-Then we generate all possible groups of operators. By filling in the operators and computing the tree,
-    we get all values. This allows us to not worry about parenthesis as any parenthesis would just create
-    a different tree which will also be computed. We just have to careful to swap child values if the operator
-    is / or -, since order for these matters.
-'''
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 # This will generate all binary trees with the given leaves.
@@ -91,11 +83,29 @@ def generate_expression_tree_values(operators, values):
 
 
 def solve():
+    """
+    To start with, since we are looking at digits, we are only concerned with the numbers 0 to 9. Also since
+        a < b < c < d, we only care about the combinations and not the permutations of these.
+
+    For each combination of a,b,c,d we generate all possible trees. For example,
+        operator
+    operator operator
+    a      b c      d
+
+    Then we generate all possible groups of operators. By filling in the operators and computing the tree,
+        we get all values. This allows us to not worry about parenthesis as any parenthesis would just create
+        a different tree which will also be computed. We just have to careful to swap child values if the operator
+        is / or -, since order for these matters.
+    """
     longest_chain_n = 0
     longest_chain_cat = ''
     for val_perm in combinations([float(x) for x in range(1, 10)], 4):
         values_expressed = {}
-        for val in (x for x in generate_expression_tree_values([operator.add, operator.sub, operator.mul, operator.truediv], val_perm) if x.is_integer() and x > 0):
+        for val in generate_expression_tree_values(
+                [operator.add, operator.sub, operator.mul, operator.truediv], val_perm):
+            if not val.is_integer() or val <= 0:
+                continue
+
             values_expressed[val] = None
 
         for i in count(1):
@@ -111,8 +121,8 @@ def solve():
     return longest_chain_cat
 
 
+solve.answer = 1258
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p093_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

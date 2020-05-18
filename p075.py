@@ -1,4 +1,4 @@
-'''
+"""
 It turns out that 12 cm is the smallest length of wire that can be bent to form an
     integer sided right angle triangle in exactly one way, but there are many more examples.
 
@@ -17,35 +17,37 @@ In contrast, some lengths of wire, like 20 cm, cannot be bent to form an integer
 
 Given that L is the length of the wire, for how many values of L <= 1,500,000
     can exactly one integer sided right angle triangle be formed?
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from math import sqrt, floor
-from fractions import gcd
 
-
-'''
-Generating Pythagorean triples:
-a = k * (m**2 - n**2)
-b = k * 2*m*n
-c = k * (m**2 + n**2)
-where m, n, k are positive integers
-    m > n and m and n are coprime and m and n are not both odd
-
-
-L = a + b + c
-L = k * (m**2 - n**2) + k * 2*m*n + k * (m **2 + n**2)
-    min(k) == 1
-L = m**2 - n**2 + 2*m*n + m**2 + n**2
-L = 2 * m * (m + n)
-max_L = 2 * max_m * (max_m + min_n)
-    min_n = 1
-max_L = 2 * max_m * (max_m + 1)
-max_m = (sqrt(2 * max_L + 1) + 1) / 2
-'''
+try:
+    from .utils import output_answer, gcd
+except ImportError:
+    from utils import output_answer, gcd
 
 
 def solve(max_L=1500000):
+    """
+    Generating Pythagorean triples:
+    a = k * (m**2 - n**2)
+    b = k * 2*m*n
+    c = k * (m**2 + n**2)
+    where m, n, k are positive integers
+        m > n and m and n are coprime and m and n are not both odd
+
+    L = a + b + c
+    L = k * (m**2 - n**2) + k * 2*m*n + k * (m **2 + n**2)
+        min(k) == 1
+    L = m**2 - n**2 + 2*m*n + m**2 + n**2
+    L = 2 * m * (m + n)
+    max_L = 2 * max_m * (max_m + min_n)
+        min_n = 1
+    max_L = 2 * max_m * (max_m + 1)
+    max_m = (sqrt(2 * max_L + 1) + 1) / 2
+    """
     sieve = [0] * (max_L + 1)
     max_m = int(floor((sqrt(2 * max_L + 1) - 1) / 2))
 
@@ -68,8 +70,8 @@ def solve(max_L=1500000):
     return sum(1 for x in sieve if x == 1)
 
 
+solve.answer = 161667
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p075_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

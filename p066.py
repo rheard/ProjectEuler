@@ -1,4 +1,4 @@
-'''
+"""
 Consider quadratic Diophantine equations of the form:
 
 x**2 - D * y**2 = 1
@@ -18,15 +18,24 @@ By finding minimal solutions in x for D = {2, 3, 5, 6, 7}, we obtain the followi
 Hence, by considering minimal solutions in x for D <= 7, the largest x is obtained when D=5.
 
 Find the value of D <= 1000 in minimal solutions of x for which the largest value of x is obtained.
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from fractions import Fraction
 from decimal import getcontext
 from itertools import count
 from math import sqrt
 
-from p064 import continued_fraction
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
+try:
+    from .p064 import continued_fraction
+except ImportError:
+    from p064 import continued_fraction
 
 
 def estimate_fraction(fraction, max_i, i=0):
@@ -39,6 +48,9 @@ def estimate_fraction(fraction, max_i, i=0):
 
 
 def solve(max_D=1000):
+    """
+    Quadratic Diophantine equations can be solved using continued fractions, meaning we can reuse code from problem 64.
+    """
     if getcontext().prec < (0.1 * max_D):
         getcontext().prec = int(0.1 * max_D)
 
@@ -69,8 +81,8 @@ def solve(max_D=1000):
     return max_x_D
 
 
+solve.answer = 661
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p066_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

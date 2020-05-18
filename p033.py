@@ -10,8 +10,6 @@ There are exactly four non-trivial examples of this type of fraction, less than 
 If the product of these four fractions is given in its lowest common terms, find the value of the denominator.
 """
 
-from __future__ import print_function
-
 import os
 
 from decimal import Decimal

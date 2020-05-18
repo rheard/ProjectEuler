@@ -28,31 +28,17 @@ Using network.txt, a 6K text file containing a network with forty vertices,
     connected.
 """
 
-from __future__ import print_function
+import os
 
-"""
-Solving the solution to this problem is also known as the minimum
-    spanning tree, finding of which is a classic problem used in several
-    fields including energy grid construction.
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
-After reading Wikipedia:
-
-1. The optimal algorithm is quite complex, and although it is provably
-    optimal, it's runtime is unknown. It relies on using decision trees.
-
-2. Baruvka's algorithm can be parallized. With a linear amount of
-    processors, it has a runtime of O(log n).
-
-However, I went with Kruskal's algorithm. This problem can be solved easily
-    enough without getting into complexities such as decision trees.
-    And allocating a pool for a parallized algorithm may very well take
-    longer than just solving the darn problem to begin with.
-"""
-
-with open('ProjectEuler/network.txt', 'r') as rb:
-    _graph = [[int(entry) if entry != '-' else None
+with open('ProjectEuler/p107_network.txt', 'r') as rb:
+    __GRAPH = [[int(entry) if entry != '-' else None
                 for entry in line.strip().split(',')]
-              for line in rb.readlines()]
+               for line in rb.readlines()]
 
 
 def graph_weight(graph):
@@ -75,7 +61,7 @@ def minimum_spanning_forest(graph):
     # A tree shall be a dictionary with a set of edges in key 'edges', and
     #   a set of contained verts in the key 'verts'
     # F is a forest of trees, with a tree for each node and no edges.
-    F = [{'edges': set(), 'verts': set([i])} for i, _ in enumerate(graph)]
+    F = [{'edges': set(), 'verts': {i}} for i, _ in enumerate(graph)]
     # S is the list of edges.
     S = [(x, y)
          for x, node in enumerate(graph)
@@ -105,25 +91,41 @@ def minimum_spanning_forest(graph):
 
     # Reconstruct the graph format using the found minimal spanning forest.
     return [
-                [edge if any(tuple(sorted((node_i, edge_i), reverse=True))
-                             in tree['edges']
-                             for tree in F)
-                 else None
-                 for edge_i, edge in enumerate(node)] 
-            for node_i, node in enumerate(graph)
-            ]
+        [edge if any(tuple(sorted((node_i, edge_i), reverse=True)) in tree['edges'] for tree in F) else None
+         for edge_i, edge in enumerate(node)]
+        for node_i, node in enumerate(graph)
+    ]
 
 
-def solve(graph=_graph):
+def solve(graph=None):
+    """
+    Solving the solution to this problem is also known as the minimum
+        spanning tree, finding of which is a classic problem used in several
+        fields including energy grid construction.
+
+    After reading Wikipedia:
+
+    1. The optimal algorithm is quite complex, and although it is provably
+        optimal, it's runtime is unknown. It relies on using decision trees.
+
+    2. Baruvka's algorithm can be parallized. With a linear amount of
+        processors, it has a runtime of O(log n).
+
+    However, I went with Kruskal's algorithm. This problem can be solved easily
+        enough without getting into complexities such as decision trees.
+        And allocating a pool for a parallized algorithm may very well take
+        longer than just solving the darn problem to begin with.
+    """
     # Get the difference between the weight of the graph and the weight
     #   of it's minimum spanning forest.
+    graph = graph or __GRAPH
     original_weight = graph_weight(graph)
     new_weight = graph_weight(minimum_spanning_forest(graph))
     return original_weight - new_weight
 
 
+solve.answer = 259679
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p107_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

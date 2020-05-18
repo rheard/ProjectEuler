@@ -1,6 +1,13 @@
-from multiprocessing.pool import Pool
+import os
 import time
 import multiprocessing
+
+from multiprocessing.pool import Pool
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 count = 0
 
@@ -19,11 +26,12 @@ def reversible(n):
     return True
 
 
-def perform():
+def solve(n=10**9):
+    """No strategy here. Bruteforce."""
     global count
     with Pool(multiprocessing.cpu_count() - 2) as tp:
         add_more = True
-        for i in range(1, 1000000000):
+        for i in range(1, n):
             while True:
                 if tp._taskqueue.qsize() < 1000000:
                     add_more = True
@@ -37,8 +45,8 @@ def perform():
     return count
 
 
+solve.answer = 608720
+
+
 if __name__ == '__main__':
-    ans = perform()
-    with open('p145_ans.txt', 'w') as wb:
-        wb.write(ans)
-        print(ans)
+    output_answer(os.path.splitext(__file__)[0], solve)

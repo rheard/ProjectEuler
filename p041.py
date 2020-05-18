@@ -5,8 +5,6 @@ We shall say that an n-digit number is pandigital if it makes use of all the dig
 What is the largest n-digit pandigital prime that exists?
 """
 
-from __future__ import print_function
-
 import os
 import string
 

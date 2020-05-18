@@ -1,4 +1,4 @@
-'''
+"""
 In the 5 by 5 matrix below, the minimal path sum from the top left to the bottom right,
     by moving left, right, up, and down, is indicated in bold red and is equal to 2297.
 
@@ -11,23 +11,34 @@ In the 5 by 5 matrix below, the minimal path sum from the top left to the bottom
 Find the minimal path sum, in matrix.txt (right click and "Save Link/Target As..."),
     a 31K text file containing a 80 by 80 matrix, from the top left to the bottom right
     by moving left, right, up, and down.
-'''
+"""
 
-from __future__ import print_function
+import os
 
-with open('ProjectEuler/matrix.txt', 'r') as rb:
-    _grid = [[int(x) for x in line.split(',')] for line in rb.readlines()]
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
+
+with open('ProjectEuler/p081_matrix.txt', 'r') as rb:
+    __GRID = [[int(x) for x in line.split(',')] for line in rb.readlines()]
 
 
 def get_grid_cell(grid, dimensions):
     return grid[dimensions[0]][dimensions[1]]
 
 
-def solve(grid=_grid):
+def solve(grid=None):
+    """
+    Unfortunately there aren't any slick rules like the previous 2 problems. We will just use a form ofDijkstra's
+        to crawl the grid.
+    """
     float_inf = float('inf')
+    grid = grid or __GRID
     distances = [[float_inf] * len(row) for row in grid]
     distances[0][0] = grid[0][0]
-    Q_0 = set([(0, 0)])
+    Q_0 = {(0, 0)}
     target = (len(grid) - 1, len(grid[-1]) - 1)
     float_inf = float('inf')
 
@@ -75,8 +86,8 @@ def solve(grid=_grid):
     return answer
 
 
+solve.answer = 425185
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p083_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

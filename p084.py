@@ -1,6 +1,6 @@
-# TODO: Return to this problem with probablistic math.
+# TODO: Return to this problem with probabilities instead of randomness
 
-'''
+"""
 In the game, Monopoly, the standard board is set up in the following way:
 
 GO  A1  CC1 A2  T1  R1  B1  CH1 B2  B3  JAIL
@@ -62,15 +62,22 @@ Statistically it can be shown that the three most popular squares, in order, are
     six-digit modal string: 102400.
 
 If, instead of using two 6-sided dice, two 4-sided dice are used, find the six-digit modal string.
-'''
+"""
 
+import os
 
 from random import sample, choice
 from collections import deque
 from math import ceil
 
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
 
 def solve(sides=4, rolls=10**6):
+    """No strategy here. Just play the game a bunch until we get an idea of the value."""
     possible_rolls = [(i + j, i, j) for i in range(1, sides + 1) for j in range(1, sides + 1)]
     board_lands = [0] * 40
     board_lands[0] += 1
@@ -130,8 +137,8 @@ def solve(sides=4, rolls=10**6):
     return ''.join(str(x[0]) for x in odds[:3])
 
 
+solve.answer = 101524
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p084_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

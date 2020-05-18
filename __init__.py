@@ -29,9 +29,10 @@ PROBLEMS = dict()
 COMPLETED_PROBLEMS = dict()
 
 # We've completed problems 1 through:
-MAX_SEQUENTIAL_COMPLETED_PROBLEM = 51
+MAX_SEQUENTIAL_COMPLETED_PROBLEM = 126
 __COMPLETED_PROBLEMS = sorted(
-    set()  # Use this to define problems after sequential completion fails.
+    # Use this to define problems after sequential completion fails.
+    {'p131', 'p137', 'p146', 'p148', 'p149', 'p243'}
     | set('p{:03}'.format(p) for p in range(1, MAX_SEQUENTIAL_COMPLETED_PROBLEM + 1))
 )
 
@@ -56,7 +57,7 @@ for problem in os.listdir(os.path.dirname(__file__)):
             logger.warning('Module for problem %s is missing the problem statement!', problem)
 
         PROBLEMS[problem] = problem_module.solve
-    except (ImportError, AttributeError):
+    except Exception:
         logger.error('Could not import solver for problem %r', problem, exc_info=True)
         PROBLEMS[problem] = InvalidProblemSolver(problem)
 
@@ -65,14 +66,11 @@ for problem in os.listdir(os.path.dirname(__file__)):
 
 # Add the problems to the local namespace for __all__.
 locals().update(PROBLEMS)
-__all__ = ['InvalidProblemSolver']
+__all__ = ['InvalidProblemSolver', 'utils']
 __all__ += list(PROBLEMS.keys())
 
 # Also import all the utils.
 if __package__:
-    lib = importlib.import_module('.utils', __package__)
+    utils = importlib.import_module('.utils', __package__)
 else:
-    lib = importlib.import_module('utils')
-
-locals().update(lib.__dict__)
-__all__ += lib.__all__
+    utils = importlib.import_module('utils')

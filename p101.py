@@ -38,49 +38,16 @@ un = 1 - n + n**2 - n**3 + n**4 - n**5 + n**6 - n**7 + n**8 - n**9 + n**10
 Find the sum of FITs for the BOPs.
 """
 
-from __future__ import print_function
+import os
+
 from numpy import matrix
 from sympy import Symbol, lambdify, degree
 from sympy.parsing.sympy_parser import parse_expr
 
-"""
-This amounts to solving an (k-1)th degree polynomial with k points.
-    That can be accomplished using Cramer's rule.
-
-For example, lets solve the example for OP(3, n). We are given the points:
-pts = [(1, 1),
-       (2, 8),
-       (3, 27)]
-
-We can say that our target expression is OP(3, n) = a*n**2 + bn + c.
-    Lets define our matricies such that
-
-A = [[1, 1, 1],
-     [1, 2, 4],
-     [1, 3, 9]]
-Note that A is a k * k matrix, where each row represents each x,
-    and each column represents a power of x starting with 0.
-
-B = [[a],
-     [b],
-     [c]]
-
-and
-
-C = [[1],
-     [8],
-     [27]]
-
-And we say that
-A * B = C
-B = A**-1 * C
-B = [[6],
-     [-11],
-     [6]]
-
-Note that the first 6 corresponds to c, so our expression is
-6*n**2 - 11*n + 6
-"""
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def OP(k, pts):
@@ -96,6 +63,44 @@ def OP(k, pts):
 
 
 def solve(eq='1 - n + n**2 - n**3 + n**4 - n**5 + n**6 - n**7 + n**8 - n**9 + n**10'):
+    """
+    This amounts to solving an (k-1)th degree polynomial with k points.
+        That can be accomplished using Cramer's rule.
+
+    For example, lets solve the example for OP(3, n). We are given the points:
+    pts = [(1, 1),
+           (2, 8),
+           (3, 27)]
+
+    We can say that our target expression is OP(3, n) = a*n**2 + bn + c.
+        Lets define our matricies such that
+
+    A = [[1, 1, 1],
+         [1, 2, 4],
+         [1, 3, 9]]
+    Note that A is a k * k matrix, where each row represents each x,
+        and each column represents a power of x starting with 0.
+
+    B = [[a],
+         [b],
+         [c]]
+
+    and
+
+    C = [[1],
+         [8],
+         [27]]
+
+    And we say that
+    A * B = C
+    B = A**-1 * C
+    B = [[6],
+         [-11],
+         [6]]
+
+    Note that the first 6 corresponds to c, so our expression is
+    6*n**2 - 11*n + 6
+    """
     eq = parse_expr(eq)
     eq_degree = degree(eq)
     eq = lambdify(eq.free_symbols, eq)
@@ -103,8 +108,8 @@ def solve(eq='1 - n + n**2 - n**3 + n**4 - n**5 + n**6 - n**7 + n**8 - n**9 + n*
     return sum(int(OP(k, points)(k + 1)) for k in range(1, eq_degree + 1))
 
 
+solve.answer = 37076114526
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p101_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

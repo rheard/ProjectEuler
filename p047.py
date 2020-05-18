@@ -14,8 +14,6 @@ Find the first four consecutive integers to have four distinct prime factors eac
     What is the first of these numbers?
 """
 
-from __future__ import print_function
-
 import os
 
 from itertools import count

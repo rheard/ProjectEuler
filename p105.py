@@ -17,11 +17,22 @@ Using sets.txt, a 4K text file with one-hundred sets containing seven to twelve 
 NOTE: This problem is related to Problem 103 and Problem 106.
 """
 
-from ProjectEuler.p103 import special_sum_set
+import os
+
 from multiprocessing import Pool
 
-with open('ProjectEuler/sets.txt', 'r') as rb:
-    _sets = [tuple(int(x) for x in line.split(',')) for line in rb.readlines()]
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
+try:
+    from .p103 import special_sum_set
+except ImportError:
+    from p103 import special_sum_set
+
+with open('ProjectEuler/p105_sets.txt', 'r') as rb:
+    __SETS = [tuple(int(x) for x in line.split(',')) for line in rb.readlines()]
 
 
 def _wrapper(combo):
@@ -30,15 +41,16 @@ def _wrapper(combo):
     return 0
 
 
-def solve(sets=_sets):
+def solve(sets=None):
+    """We simply bruteforce this problem using the code from problem 103."""
     with Pool(6) as tp:
-        ans = tp.map(_wrapper, sets)
+        ans = tp.map(_wrapper, sets or __SETS)
 
     return sum(ans)
 
 
+solve.answer = 73702
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p105_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

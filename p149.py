@@ -1,4 +1,4 @@
-'''
+"""
 Looking at the table below, it is easy to verify that the maximum possible
     sum of adjacent numbers in any direction (horizontal, vertical, diagonal or anti-diagonal)
     is 16 (= 8 + 7 + 1).
@@ -23,25 +23,18 @@ The terms of s are then arranged in a 2000*2000 table, using the first 2000 numb
 
 Finally, find the greatest sum of (any number of) adjacent entries in any direction
     (horizontal, vertical, diagonal or anti-diagonal).
-'''
+"""
 
-from __future__ import print_function
+import os
 
-'''
-This problem is pretty straight forward and I would've gotten the solution 10x faster than I did
-    if not for this key part of the problem: "find the greatest sum of *(any number of)* adjacent entries."
-
-So for instance, if we were just looking at columns, it isn't "find the greatest sum of any column", instead
-    the question is "find the greatest subsequence sum of any column", which changes the problem quite a bit.
-
-    I was going to implement a method to find the greatest subsequence sum, but Google reveals the optimal
-    algorithm for the greatest subsequence sum is Kadane's algorithm. Wikipedia is nice enough to give
-    a method for this algorithm in Python.
-'''
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def max_subarray(A):
-    '''Credit to Wikipedia, as this was basically copied from there.'''
+    """Credit to Wikipedia, as this was basically copied from there."""
     A = list(A)
     max_ending_here = max_so_far = A[0]
 
@@ -53,6 +46,17 @@ def max_subarray(A):
 
 
 def solve(dimension_size=2000):
+    """
+    This problem is pretty straight forward and I would've gotten the solution 10x faster than I did
+        if not for this key part of the problem: "find the greatest sum of *(any number of)* adjacent entries."
+
+    So for instance, if we were just looking at columns, it isn't "find the greatest sum of any column", instead
+        the question is "find the greatest subsequence sum of any column", which changes the problem quite a bit.
+
+        I was going to implement a method to find the greatest subsequence sum, but Google reveals the optimal
+        algorithm for the greatest subsequence sum is Kadane's algorithm. Wikipedia is nice enough to give
+        a method for this algorithm in Python.
+    """
     sequence = [None] * dimension_size**2
 
     for k_sub, _ in enumerate(sequence):
@@ -71,23 +75,30 @@ def solve(dimension_size=2000):
 
     # Check verts
     for column_number in range(dimension_size):
-        maximum = max(maximum, max_subarray(sequence[column_number + line_number * dimension_size] for line_number in range(dimension_size)))
+        maximum = max(maximum,
+                      max_subarray(sequence[column_number + line_number * dimension_size]
+                                   for line_number in range(dimension_size)))
 
     # Check diagonal
-    for anti in [(lambda x: x), (lambda x: (x // dimension_size) * dimension_size + (dimension_size - (x % dimension_size) - 1))]:
+    for anti in [(lambda x: x),
+                 (lambda x: (x // dimension_size) * dimension_size + (dimension_size - (x % dimension_size) - 1))]:
         # Step 1, diagonal along top row
         for top_number in reversed(range(dimension_size)):
-            maximum = max(maximum, max_subarray(sequence[anti((dimension_size + 1) * i + top_number)] for i in range(dimension_size - top_number)))
+            maximum = max(maximum, max_subarray(sequence[anti((dimension_size + 1) * i + top_number)]
+                                                for i in range(dimension_size - top_number)))
 
         # Step 2, diagonals along left column.
         for left_number in range(1, dimension_size):
-            maximum = max(maximum, max_subarray(sequence[anti((dimension_size * left_number) + i * (dimension_size + 1))] for i in range(dimension_size - left_number)))
+            maximum = max(maximum, max_subarray(
+                sequence[anti((dimension_size * left_number) + i * (dimension_size + 1))]
+                for i in range(dimension_size - left_number)
+            ))
 
     return maximum
 
 
+solve.answer = 52852124
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p149_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

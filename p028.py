@@ -13,8 +13,6 @@ It can be verified that the sum of the numbers on the diagonals is 101.
 What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
 """
 
-from __future__ import print_function
-
 import os
 
 try:
@@ -23,18 +21,29 @@ except ImportError:
     from utils import output_answer
 
 
+def top_right_diagonal(x):
+    return (2 * x + 1)**2
+
+
+def top_left_diagonal(x):
+    return 4 * x**2 + 2 * x + 1
+
+
+def bottom_left_diagonal(x):
+    return 4 * x**2 + 1
+
+
+def bottom_right_diagonal(x):
+    return top_left_diagonal(-x)
+
+
 def solve(n=1001):
     """We don't need to compute a grid, all the diagonals have a predictable formula."""
-    top_right = lambda x: (2 * x + 1)**2
-    top_left = lambda x: 4 * x**2 + 2 * x + 1
-    bottom_left = lambda x: 4 * x**2 + 1
-    bottom_right = lambda x: top_left(-x)
-
     running_sum = 1
     n = (n - 1) // 2  # We're computing numbers to the left and right, so we only need to go up to half the width.
 
     for i in range(1, n + 1):
-        running_sum += top_left(i) + top_right(i) + bottom_right(i) + bottom_left(i)
+        running_sum += top_left_diagonal(i) + top_right_diagonal(i) + bottom_right_diagonal(i) + bottom_left_diagonal(i)
 
     return running_sum
 

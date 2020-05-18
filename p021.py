@@ -11,8 +11,6 @@ For example, the proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 a
 Evaluate the sum of all the amicable numbers under 10000.
 """
 
-from __future__ import print_function
-
 import os
 
 try:

@@ -26,8 +26,6 @@ Find the thirteen adjacent digits in the 1000-digit number that have the greates
     What is the value of this product?
 """
 
-from __future__ import print_function
-
 import os
 
 try:

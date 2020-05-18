@@ -1,4 +1,4 @@
-'''
+"""
 Consider the fraction, n/d, where n and d are positive integers.
     If n<d and HCF(n,d)=1, it is called a reduced proper fraction.
 
@@ -11,12 +11,17 @@ It can be seen that there are 3 fractions between 1/3 and 1/2.
 
 How many fractions lie between 1/3 and 1/2 in the sorted set of reduced proper fractions
     for d <= 12,000?
-'''
+"""
 
-from __future__ import print_function
-from fractions import gcd
+import os
+
 from math import ceil
 from multiprocessing import Pool
+
+try:
+    from .utils import output_answer, gcd
+except ImportError:
+    from utils import output_answer, gcd
 
 
 def fraction_count_in_target_range_for_d(d):
@@ -32,6 +37,7 @@ def fraction_count_in_target_range_for_d(d):
 
 
 def solve(max_d=12000):
+    """No strategy here. Bruteforce."""
     tp = Pool(8)
     fraction_counts = tp.map(fraction_count_in_target_range_for_d, range(4, max_d + 1))
     tp.close()
@@ -39,8 +45,8 @@ def solve(max_d=12000):
     return sum(fraction_counts)
 
 
+solve.answer = 7295372
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p073_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

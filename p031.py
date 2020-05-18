@@ -9,8 +9,6 @@ It is possible to make E2 in the following way:
 How many different ways can E2 be made using any number of coins?
 """
 
-from __future__ import print_function
-
 import os
 
 try:

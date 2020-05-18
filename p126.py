@@ -16,15 +16,15 @@ It turns out that 154 is the least value of n for which C(n) = 10.
 Find the least value of n for which C(n) = 1000.
 """
 
-from __future__ import print_function
+import os
+
 from collections import defaultdict
 from itertools import count
 
-"""
-I have tried many solutions to solve this problem, none of which are effective. Giving a limit like this
-    and brute forcing a solution is MUCH MUCH MUCH faster than any "smarts" I try to add, such as using
-    stars and bars. I am giving up on this... for now.
-"""
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def cuboid_layer_count(x, y, z, layer=1):
@@ -33,9 +33,13 @@ def cuboid_layer_count(x, y, z, layer=1):
 
 _last_cnts = defaultdict(int)
 _last_limit = 0
-def solve(n, limit=30000, anustart=True):
+
+
+def solve(n=1000, limit=30000, anustart=True):
     """
-    Solve ProjectEuler problem 126
+    I have tried many solutions to solve this problem, none of which are effective. Giving a limit like this
+        and brute forcing a solution is MUCH MUCH MUCH faster than any "smarts" I try to add, such as using
+        stars and bars. I am giving up on this... for now.
 
     Args:
         n (int): The number of shared solutions for i=ab + bc + ac
@@ -53,6 +57,7 @@ def solve(n, limit=30000, anustart=True):
     if anustart:
         _last_cnts = defaultdict(int)
         _last_limit = 0
+
     cnts = _last_cnts
     for x in count(1):
         this_cnt = cuboid_layer_count(x, x, x)
@@ -74,16 +79,18 @@ def solve(n, limit=30000, anustart=True):
                         break
                     if cnt >= _last_limit:
                         cnts[cnt] += 1
+
     _last_cnts = cnts
     _last_limit = limit
     for k in sorted(cnts.keys()):
         if k < limit and cnts[k] == n:
             return k
+
     return None
 
 
+solve.answer = 18522
+
+
 if __name__ == '__main__':
-    answer = solve(1000)
-    print(answer)
-    with open('p126_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

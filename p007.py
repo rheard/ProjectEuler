@@ -4,8 +4,6 @@ By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that 
 What is the 10,001st prime number?
 """
 
-from __future__ import print_function
-
 import os
 
 from sympy import prime

@@ -22,20 +22,24 @@ We shall call A_F(x) a golden nugget if x is rational, because they become incre
 Find the 15th golden nugget.
 """
 
-from utils import fib
+import os
 
-"""
-Given the problem statement, I searched OEIS for "2,_,_,_,_,_,_,_,_,74049690" and instantly found the equation
-    for this problem: Fibonacci(2*n) * Fibonacci(2*n+1)
-"""
+try:
+    from .utils import output_answer, fibonacci
+except ImportError:
+    from utils import output_answer, fibonacci
 
 
 def solve(n=15):
-    return fib(2*n) * fib(2*n + 1)
+    """
+    Given the problem statement, I searched OEIS for "2,_,_,_,_,_,_,_,_,74049690" and instantly found the equation
+        for this problem: Fibonacci(2*n) * Fibonacci(2*n+1)
+    """
+    return fibonacci(2*n) * fibonacci(2*n + 1)
+
+
+solve.answer = 1120149658760
 
 
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p001_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

@@ -1,8 +1,10 @@
 import argparse
 import logging
 
+from timeit import default_timer as timer
+
 from __init__ import PROBLEMS, COMPLETED_PROBLEMS, InvalidProblemSolver
-from utils import output_answer
+from utils import output_answer, human_readable_time
 
 logger = logging.getLogger()
 
@@ -62,5 +64,10 @@ if __name__ == '__main__':
     logger.info('Loading done. Beginning problem solving...')
 
     # TODO: Process pool? Only concern is ensuring that output text is ordered.
+    total_start_time = timer()
     for problem_key, problem_solver in sorted(problems_to_solve.items()):
         output_answer(problem_key, problem_solver, args.verbose)
+    total_end_time = timer()
+
+    if args.verbose:
+        logger.critical("Total execution time: %s", human_readable_time(total_end_time - total_start_time))

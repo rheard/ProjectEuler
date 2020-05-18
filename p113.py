@@ -15,41 +15,14 @@ As n increases, the proportion of bouncy numbers below n increases such that
 How many numbers below a googol (10**100) are not bouncy?
 """
 
-from __future__ import print_function
-from ProjectEuler.lib import prod
+import os
+
 from math import factorial
-from collections import defaultdict, deque
 
-
-"""
-Approaching this problem, I figured that the number of non-bouncy numbers must
-    be represented by a logical formula. After much testing and experimentation
-    of generating all the non-bouncy numbers of for a length, the following facts
-    were found with OEIS:
-
- * The number of increasing numbers a(n) of length n is found by the following formula:
-    binomial(n + 8, 8)
-    given by A000581
-
- * The number of decreasing numbers a(n) of length n is found by the following formula:
-    binomial(n + 9, 9) - 1
-    given by A035927 which is A000582 - 1.
-
-This includes the duplicates however, which the number of duplicates of length n is
-    9, 1 for each of the repdigits. ie, 11...1, 2...2, 3...3, 4...4, 5...5.
-
-Thus, for numbers of length n, the number of increasing and decreasing numbers (non-bouncy)
-    is given by:
-binomial(n + 8, 8) + binomial(n + 9, 9) - 1 - 9
-
-Now start simplification...
-factorial(n + 8)/(factorial(n)*factorial(8)) + factorial(n + 9)/(factorial(n)*factorial(9)) - 10
-(factorial(9)*factorial(n + 8) + factorial(8)*factorial(n + 9))/(factorial(n)*factorial(9)*factorial(8)) - 10
-(9 * factorial(n + 8) + factorial(n + 9))/(factorial(n)*factorial(9)) - 10
-(9 * product(i for i in range(n + 1, n + 9)) + product(i for i in range(n + 1, n + 10)))/factorial(9) - 10
-product(i for i in range(n + 1, n + 9)) * (9 + (n + 9))/factorial(9) - 10
-(18 + n)/factorial(9) * product(i for i in range(n + 1, n + 9)) - 10
-"""
+try:
+    from .utils import output_answer, prod
+except ImportError:
+    from utils import output_answer, prod
 
 
 def nonbouncy(n):
@@ -57,21 +30,46 @@ def nonbouncy(n):
     return ((18 + n) / factorial(9)) * prod(i for i in range(n + 1, n + 9)) - 10
 
 
-def nonbouncy_cnt(n):
+def nonbouncy_count(n):
     """Returns the number of non-bouncy numbers with a digit length less than or equal to n"""
-    return sum(nonbouncy(i) for i in range(1, n + 1))
+    return int(sum(nonbouncy(i) for i in range(1, n + 1)))
 
 
 def solve(n=100):
     """
-    Args:
-        n (int): The max digit length.
+    Approaching this problem, I figured that the number of non-bouncy numbers must
+        be represented by a logical formula. After much testing and experimentation
+        of generating all the non-bouncy numbers of for a length, the following facts
+        were found with OEIS:
+
+     * The number of increasing numbers a(n) of length n is found by the following formula:
+        binomial(n + 8, 8)
+        given by A000581
+
+     * The number of decreasing numbers a(n) of length n is found by the following formula:
+        binomial(n + 9, 9) - 1
+        given by A035927 which is A000582 - 1.
+
+    This includes the duplicates however, which the number of duplicates of length n is
+        9, 1 for each of the repdigits. ie, 11...1, 2...2, 3...3, 4...4, 5...5.
+
+    Thus, for numbers of length n, the number of increasing and decreasing numbers (non-bouncy)
+        is given by:
+    binomial(n + 8, 8) + binomial(n + 9, 9) - 1 - 9
+
+    Now start simplification...
+    factorial(n + 8)/(factorial(n)*factorial(8)) + factorial(n + 9)/(factorial(n)*factorial(9)) - 10
+    (factorial(9)*factorial(n + 8) + factorial(8)*factorial(n + 9))/(factorial(n)*factorial(9)*factorial(8)) - 10
+    (9 * factorial(n + 8) + factorial(n + 9))/(factorial(n)*factorial(9)) - 10
+    (9 * product(i for i in range(n + 1, n + 9)) + product(i for i in range(n + 1, n + 10)))/factorial(9) - 10
+    product(i for i in range(n + 1, n + 9)) * (9 + (n + 9))/factorial(9) - 10
+    (18 + n)/factorial(9) * product(i for i in range(n + 1, n + 9)) - 10
     """
-    return nonbouncy_cnt(n)
+    return nonbouncy_count(n)
+
+
+solve.answer = 51161058134250
 
 
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p113_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

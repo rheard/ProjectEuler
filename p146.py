@@ -1,43 +1,22 @@
-'''
+"""
 The smallest positive integer n for which the numbers n**2 + 1, n**2 + 3, n**2 + 7, n**2 + 9,
     n**2 + 13, and n**2 + 27 are consecutive primes is 10. The sum of all such
     integers n below one-million is 1242490.
 
 What is the sum of all such integers n below 150 million?
-'''
+"""
 
-from sympy import nextprime, isprime
+import os
+
 from multiprocessing import Pool
 from itertools import chain
 
-'''
-After brute forcing the for n < 10**7, we find the sequence:
-    10, 315410, 927070, 2525870, 8146100, ...
+from sympy import nextprime, isprime
 
-We know this is a subset of A057095, since that sequence is for sequential
-    primes with the forms n**2 + 1, n**2 + 3, n**2 + 7, n**2 + 9 and n**2 + 13.
-
-It can also be noted that for the ones found, they are all divisible by 10. Combine this
-    fact with multiprocessing and the true answer can be found in just over 3 minutes.
-
-Now that we have all the ones we are interested in, we just need to optimize the algorithm.
-    There appears to be no decernable pattern in the prime factoring of the answers,
-        beyond the fact they are divisible by 10.
-    Taking each answer mod i for i in range(2, 10), we see that the only pattern is
-        that answer mod 2 and answer mod 5 are both 0, refelcting the divisibility by 10
-        rule, so nothing...
-    Taking each answer**2 mod i for i in range(2, 10) reveals some patterns. First is that
-        answer**2 mod 4 is 0, reflecting the fact that answer mod 2 is 0, so nothing new here.
-
-        Though we can see these always hold:
-        answer**2 mod 3 == 1
-        answer**2 mod 7 == 2
-
-        A similar process can be used to discover this fact:
-        answer mod 3 != 0.
-
-    These 3 facts combined with multiprocessing can tackle this problem in under 40 seconds.
-'''
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def is_of_interest(n_range):
@@ -67,6 +46,34 @@ def is_of_interest(n_range):
 
 
 def solve(max_n=150 * 10**6, process_count=8):
+    """
+    After brute forcing the for n < 10**7, we find the sequence:
+        10, 315410, 927070, 2525870, 8146100, ...
+
+    We know this is a subset of A057095, since that sequence is for sequential
+        primes with the forms n**2 + 1, n**2 + 3, n**2 + 7, n**2 + 9 and n**2 + 13.
+
+    It can also be noted that for the ones found, they are all divisible by 10. Combine this
+        fact with multiprocessing and the true answer can be found in just over 3 minutes.
+
+    Now that we have all the ones we are interested in, we just need to optimize the algorithm.
+        There appears to be no decernable pattern in the prime factoring of the answers,
+            beyond the fact they are divisible by 10.
+        Taking each answer mod i for i in range(2, 10), we see that the only pattern is
+            that answer mod 2 and answer mod 5 are both 0, refelcting the divisibility by 10
+            rule, so nothing...
+        Taking each answer**2 mod i for i in range(2, 10) reveals some patterns. First is that
+            answer**2 mod 4 is 0, reflecting the fact that answer mod 2 is 0, so nothing new here.
+
+            Though we can see these always hold:
+            answer**2 mod 3 == 1
+            answer**2 mod 7 == 2
+
+            A similar process can be used to discover this fact:
+            answer mod 3 != 0.
+
+        These 3 facts combined with multiprocessing can tackle this problem in under 40 seconds.
+    """
     total_range = range(10, max_n, 10)
 
     with Pool(process_count) as p:
@@ -75,8 +82,8 @@ def solve(max_n=150 * 10**6, process_count=8):
     return sum(chain(*results))
 
 
+solve.answer = 676333270
+
+
 if __name__ == '__main__':
-    ans = solve()
-    print(ans)
-    with open('p146_ans.txt', 'w') as wb:
-        wb.write(str(ans))
+    output_answer(os.path.splitext(__file__)[0], solve)

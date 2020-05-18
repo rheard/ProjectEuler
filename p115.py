@@ -21,27 +21,17 @@ For m = 50, find the least value of n for which the fill-count function
     first exceeds one million.
 """
 
-from __future__ import print_function, division
+from __future__ import division
+
+import os
+
 from itertools import count
 from math import floor
 
-from utils import binomial
-
-"""
-Continuing from the previous problem...
-
-For m = 3 and a given l, we know from the previous problem the solution is
-    a(n) = sum(binomial(n - 2*k, 2*k) for k in range(floor(n/4) + 1))
-    where n = l + 1
-
-We modified this equation using n = l to give:
-    a(n) = sum(binomial(n - 2*k + 1, 2*k) for k in range(floor((n + 1)/4) + 1))
-
-Now we need to generalize the equation for any m and n. It was fairly easy by
-    testing to find
-    F(m, n) = sum(binomial(n - (m - 1)*k + 1, 2*k) for k in range(floor((n + 1)/(m + 1)) + 1))
-    which solves the problem.
-"""
+try:
+    from .utils import output_answer, binomial
+except ImportError:
+    from utils import output_answer, binomial
 
 
 def F(m, n):
@@ -49,13 +39,28 @@ def F(m, n):
 
 
 def solve(m=50, least_n=10**6):
+    """
+    Continuing from the previous problem...
+
+    For m = 3 and a given l, we know from the previous problem the solution is
+        a(n) = sum(binomial(n - 2*k, 2*k) for k in range(floor(n/4) + 1))
+        where n = l + 1
+
+    We modified this equation using n = l to give:
+        a(n) = sum(binomial(n - 2*k + 1, 2*k) for k in range(floor((n + 1)/4) + 1))
+
+    Now we need to generalize the equation for any m and n. It was fairly easy by
+        testing to find
+        F(m, n) = sum(binomial(n - (m - 1)*k + 1, 2*k) for k in range(floor((n + 1)/(m + 1)) + 1))
+        which solves the problem.
+    """
     for n in count(1):
         if F(m, n) > least_n:
             return n
 
 
+solve.answer = 168
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p115_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

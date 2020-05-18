@@ -9,8 +9,6 @@ The longest sum of consecutive primes below one-thousand that adds to a prime, c
 Which prime, below one-million, can be written as the sum of the most consecutive primes?
 """
 
-from __future__ import print_function
-
 import os
 
 from sympy import sieve

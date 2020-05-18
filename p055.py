@@ -1,4 +1,4 @@
-'''
+"""
 If we take 47, reverse and add, 47 + 74 = 121, which is palindromic.
 
 Not all numbers produce palindromes so quickly. For example,
@@ -23,9 +23,14 @@ Surprisingly, there are palindromic numbers that are themselves Lychrel numbers;
 How many Lychrel numbers are there below ten-thousand?
 
 NOTE: Wording was modified slightly on 24 April 2007 to emphasise the theoretical nature of Lychrel numbers.
-'''
+"""
 
-from __future__ import print_function
+import os
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def lychrel_iterations(n, limit=float('inf')):
@@ -33,7 +38,7 @@ def lychrel_iterations(n, limit=float('inf')):
 
     str_n = str(n)
     rev_n = str_n[::-1]
-    n = n + int(rev_n)
+    n += int(rev_n)
     str_n = str(n)
     rev_n = str_n[::-1]
 
@@ -50,17 +55,18 @@ def lychrel_iterations(n, limit=float('inf')):
 
 
 def solve(n=10000):
+    """No strategy here. Bruteforce."""
     lychrel_count = 0
 
-    for i in range(10, 10000):
+    for i in range(10, n):
         if lychrel_iterations(i, limit=50) == -1:
             lychrel_count += 1
 
     return lychrel_count
 
 
+solve.answer = 249
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p055_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

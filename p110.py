@@ -14,14 +14,26 @@ NOTE: This problem is a much more difficult version of Problem 108 and as it
     clever implementation.
 """
 
-from p108 import solve
+import os
 
-"""
-For the solution walkthough to this problem, go to Problem 108.
-"""
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
+try:
+    from .p108 import solve as _solve
+except ImportError:
+    from p108 import solve as _solve
+
+
+def solve():
+    return _solve(4 * 10**6)
+
+
+solve.__doc__ = _solve.__doc__
+solve.answer = 9350130049860600
+
 
 if __name__ == '__main__':
-    answer = solve(4 * 10**6)
-    print(answer)
-    with open('p110_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

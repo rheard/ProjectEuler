@@ -1,4 +1,4 @@
-'''
+"""
 All square roots are periodic when written as continued fractions and can be written in the form:
 
 sqrt(N) = a_0 + (1 / a_1 + (1 / a_2 + (1 / a_3 + ...)))
@@ -42,11 +42,17 @@ sqrt(13)=[3;(1,1,1,1,6)], period=5
 Exactly four continued fractions, for N <= 13, have an odd period.
 
 How many continued fractions for N <= 10000 have an odd period?
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from math import floor
 from decimal import Decimal, getcontext
+
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def continued_fraction(n):
@@ -65,18 +71,22 @@ def continued_fraction(n):
             if a[-1] == double_a_0:
                 break
 
-    return (a[0], a[1:])
+    return a[0], a[1:]
 
 
 def solve(N=10000):
+    """
+    We just have to compute the continued fraction using an arbitrary precision.
+        An algorithm for this is available online.
+    """
     if getcontext().prec < 0.1 * N:
         getcontext().prec = int(0.1 * N)
 
     return sum(1 for x in range(2, N + 1) if len(continued_fraction(x)[1]) & 1)
 
 
+solve.answer = 1322
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p064_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

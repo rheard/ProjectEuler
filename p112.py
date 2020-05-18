@@ -19,16 +19,16 @@ Surprisingly, bouncy numbers become more and more common and by the time we
 Find the least number for which the proportion of bouncy numbers is exactly 99%.
 """
 
-from __future__ import print_function, division
+from __future__ import division
+
+import os
+
 from collections import defaultdict
 
-"""
-The heart of this solution is this...
-
-If a number is bouncy, then any number containing this number is also bouncy.
-
-ie, 155349 is bouncy, but any number of the form 1553** is also bouncy.
-"""
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
 def bouncy(n):
@@ -39,6 +39,13 @@ def bouncy(n):
 
 
 def solve(n=0.99):
+    """
+    The heart of this solution is this...
+
+    If a number is bouncy, then any number containing this number is also bouncy.
+
+    ie, 155349 is bouncy, but any number of the form 1553** is also bouncy.
+    """
     l = 3
 
     # Lets just count all of the numbers below 100 already.
@@ -98,8 +105,8 @@ def solve(n=0.99):
         l += 1
 
 
+solve.answer = 1587000
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p112_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

@@ -12,8 +12,6 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
     with the same digit, is part of an eight prime value family.
 """
 
-from __future__ import print_function
-
 import os
 
 from collections import defaultdict

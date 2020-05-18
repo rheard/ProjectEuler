@@ -1,4 +1,4 @@
-'''
+"""
 The minimal path sum in the 5 by 5 matrix below, by starting in any cell in the left column
     and finishing in any cell in the right column, and only moving up, down, and right,
     is indicated in red and bold; the sum is equal to 994.
@@ -11,17 +11,28 @@ The minimal path sum in the 5 by 5 matrix below, by starting in any cell in the 
 
 Find the minimal path sum, in matrix.txt (right click and "Save Link/Target As..."),
     a 31K text file containing a 80 by 80 matrix, from the left column to the right column.
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from copy import deepcopy
 
-with open('ProjectEuler/matrix.txt', 'r') as rb:
-    _grid = [[int(x) for x in line.split(',')] for line in rb.readlines()]
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
+
+with open('ProjectEuler/p081_matrix.txt', 'r') as rb:
+    __GRID = [[int(x) for x in line.split(',')] for line in rb.readlines()]
 
 
-def solve(grid=_grid):
-    grid = deepcopy(grid)
+def solve(grid=None):
+    """
+    We can use a similar process to problem 81, except that we need to go back for a second pass on the column
+        to determine if moving upwards would be a better choice than downwards. And we modify the solution slightly
+        to seek out the right column instead of the bottom right cell.
+    """
+    grid = deepcopy(grid or __GRID)
 
     while len(grid[0]) > 1:
         # Step 1.1 Assume on the bottom row, we must go to the right
@@ -43,8 +54,8 @@ def solve(grid=_grid):
     return min(x[0] for x in grid)
 
 
+solve.answer = 260324
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p081_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

@@ -1,4 +1,4 @@
-'''
+"""
 Starting with 1 and spiralling anticlockwise in the following way,
     a square spiral with side length 7 is formed.
 
@@ -17,30 +17,37 @@ It is interesting to note that the odd squares lie along the bottom right diagon
 If one complete new layer is wrapped around the spiral above, a square spiral with side length 9 will be formed.
     If this process is continued, what is the side length of the square spiral for which the ratio of primes
     along both diagonals first falls below 10%?
-'''
+"""
 
-from __future__ import print_function
+import os
+
 from sympy import isprime
 
-
-def right_lower_diag(n):
-    return n**2
-
-
-def right_upper_diag(n):
-    return (4 * n**2) - 10 * n + 7
+try:
+    from .utils import output_answer
+except ImportError:
+    from utils import output_answer
 
 
-def left_upper_diag(n):
-    return 4 * n**2 + 1
-
-
-def left_lower_diag(n):
-    return (4 * n**2) - 6 * n + 3
+try:
+    from .p028 import \
+        top_left_diagonal as bottom_left_diagonal, \
+        bottom_left_diagonal as top_left_diagonal, \
+        bottom_right_diagonal as top_right_diagonal
+except ImportError:
+    from p028 import \
+        top_left_diagonal as bottom_left_diagonal, \
+        bottom_left_diagonal as top_left_diagonal, \
+        bottom_right_diagonal as top_right_diagonal
 
 
 def solve(n=0.1):
-    prime_count = 0.0
+    """
+    The only trick here is to use the previously defined methods from the similar problem 28.
+
+    Note though that the grid rotated between problems.
+    """
+    prime_count = 0
     number_count = 1
     half_side_length = 0
 
@@ -48,9 +55,9 @@ def solve(n=0.1):
         half_side_length += 1
         number_count += 4
 
-        corners = [left_lower_diag(half_side_length + 1),
-                   left_upper_diag(half_side_length),
-                   right_upper_diag(half_side_length + 1)]
+        corners = [bottom_left_diagonal(half_side_length),
+                   top_left_diagonal(half_side_length),
+                   top_right_diagonal(half_side_length)]
 
         for number in corners:
             if isprime(number):
@@ -62,8 +69,8 @@ def solve(n=0.1):
     return half_side_length * 2 + 1
 
 
+solve.answer = 26241
+
+
 if __name__ == '__main__':
-    answer = solve()
-    print(answer)
-    with open('p058_ans.txt', 'w') as wb:
-        wb.write(str(answer))
+    output_answer(os.path.splitext(__file__)[0], solve)

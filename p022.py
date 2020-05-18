@@ -9,8 +9,6 @@ For example, when the list is sorted into alphabetical order, COLIN, which is wo
 What is the total of all the name scores in the file?
 """
 
-from __future__ import print_function
-
 import os
 import string
 
@@ -20,7 +18,7 @@ except ImportError:
     from utils import output_answer
 
 
-with open('ProjectEuler/names.txt', 'r') as rb:
+with open('ProjectEuler/p022_names.txt', 'r') as rb:
     _NAME_LIST = [x.strip('"') for x in rb.read().split(',')]
 
 
