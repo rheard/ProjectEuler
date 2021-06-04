@@ -18,7 +18,7 @@ except ImportError:
     from utils import output_answer, prod
 
 
-def solve():
+def solve(target_sum=1000):
     """
     We want to generate all pythagorean triples, and stop when we find a triples that adds to 1000.
 
@@ -36,10 +36,8 @@ def solve():
     So, we get a (m, n) from the forest of coprime pairs, and generate a Pythagorean triple with k=1.
         If the sum of that triple evenly divides 1000, then k is that quotient, and we found our triple.
     """
-    TARGET_NUMBER = 1000
     forest = deque([(2, 1), (3, 1)])
-    triplet = None
-    while not triplet:
+    while forest:
         m, n = forest.popleft()
 
         m_sq, n_sq = m**2, n**2
@@ -48,16 +46,14 @@ def solve():
         base_c = m_sq + n_sq
 
         base_count = base_a + base_b + base_c
-        k, r = divmod(TARGET_NUMBER, base_count)
+        k, r = divmod(target_sum, base_count)
 
         if not r:
-            triplet = (base_a * k, base_b * k, base_c * k)
-        else:
-            forest.append((2 * m - n, m))
-            forest.append((2 * m + n, m))
-            forest.append((m + 2 * n, n))
+            return prod((base_a * k, base_b * k, base_c * k))
 
-    return prod(triplet)
+        forest.append((2 * m - n, m))
+        forest.append((2 * m + n, m))
+        forest.append((m + 2 * n, n))
 
 
 solve.answer = 31875000
