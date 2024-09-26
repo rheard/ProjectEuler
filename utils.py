@@ -4,7 +4,7 @@ import functools
 import math
 import logging
 
-from itertools import count
+from itertools import accumulate, count
 from timeit import default_timer as timer
 
 # gcd was deprecated in fractions and moved to math.
@@ -92,10 +92,7 @@ def fibonacci(n):
 
 def triangle_generator():
     """An infinite generator for triangle numbers."""
-    running_sum = 0
-    for i in count(1):
-        running_sum += i
-        yield running_sum
+    yield from accumulate(count(1))
 
 
 def triangle(n):
