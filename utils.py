@@ -1,8 +1,10 @@
 from __future__ import division
-import operator
 import functools
+import inspect
 import math
 import logging
+import operator
+import os
 
 from itertools import accumulate, count
 from timeit import default_timer as timer
@@ -42,15 +44,17 @@ def human_readable_time(seconds):
     return ', '.join(output)
 
 
-def output_answer(problem_key, problem_solver, verbose=False):
+def output_answer(problem_solver, verbose=False):
     """
     Outputs the answer to the logger.
 
     Args:
-        problem_key (str): The problem key. Eg "p001"
         problem_solver (callable): The problem solver.
         verbose (bool, optional): Verbose timing output. Defaults to False.
     """
+    caller_frame = inspect.stack()[1]
+    problem_key = os.path.splitext(os.path.basename(caller_frame.filename))[0]
+
     try:
         start_time = timer()
         answer = str(problem_solver())

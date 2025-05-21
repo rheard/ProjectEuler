@@ -44,4 +44,4 @@ solve.answer = 709
 
 
 if __name__ == '__main__':
-    output_answer(os.path.splitext(__file__)[0], solve)
+    output_answer(solve)
