@@ -29,14 +29,14 @@ except ImportError:
 
 def digit_count(r):
     """
-    This method solves the questions for a single target length.
+    This method solves the problem for a single target length.
 
     This is relatively straight forward and the simplest way I could think to solve the problem.
 
-    Basically to start just get all combinations of *spots* to put our 3 numbers,
-        then all *options* for each target digit in those 3 spots.
+    Basically to start just get all combinations of SPOTs to put our 3 numbers,
+        then all OPTIONs for each target digit in those 3 spots.
 
-    From there each remaining digit is *variable* and can be permuted to find the solution.
+    From there each remaining digit is VARIABLE and can be permuted to find the solution.
     """
     output = 0
     for c in combinations(list(range(r)), r=3):  # Choose where to place our 3 digits

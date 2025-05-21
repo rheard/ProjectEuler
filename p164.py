@@ -52,7 +52,7 @@ def solve(r=20):
     U1, U2 = None, np.ones(55)
     for _ in range(r):
         U1 = U2
-        U2 = np.matmul(np.transpose(U2), T)
+        U2 = np.matmul(U2.T, T)
 
     return int(U2[0] - U1[0])
 
