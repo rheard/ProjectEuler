@@ -30,8 +30,6 @@ By solving all fifty puzzles find the sum of the 3-digit numbers found in the to
     for example, 483 is the 3-digit number found in the top left corner of the solution grid above.
 """
 
-import os
-
 from copy import deepcopy
 from multiprocessing import Pool
 

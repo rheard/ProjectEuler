@@ -3,10 +3,8 @@ import functools
 import math
 import logging
 import operator
-import os
 
 from itertools import accumulate, count
-from timeit import default_timer as timer
 
 # gcd was deprecated in fractions and moved to math.
 try:

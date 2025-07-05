@@ -26,8 +26,6 @@ We shall define m(k) to be the minimum number of multiplications to compute n**k
 For 1 <= k <= 200, find sum(m(k)).
 """
 
-import os
-
 from multiprocessing import Pool
 from collections import deque
 from math import log2

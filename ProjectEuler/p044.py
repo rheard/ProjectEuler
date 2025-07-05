@@ -12,8 +12,6 @@ Find the pair of pentagonal numbers, P_j and P_k,
     what is the value of D?
 """
 
-import os
-
 from itertools import count
 from math import sqrt
 

@@ -49,8 +49,6 @@ The file, poker.txt, contains one-thousand random hands dealt to two players.
 How many hands does Player 1 win?
 """
 
-import os
-
 from itertools import chain
 
 _values = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']

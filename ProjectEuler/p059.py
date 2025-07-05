@@ -22,7 +22,6 @@ Your task has been made easy, as the encryption key consists of three lower case
     original text.
 """
 
-import os
 import string
 
 from itertools import product

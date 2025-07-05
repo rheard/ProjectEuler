@@ -13,8 +13,6 @@ Find the sum of all the numbers less than 108 that are both palindromic
     and can be written as the sum of consecutive squares.
 """
 
-import os
-
 from itertools import count
 
 

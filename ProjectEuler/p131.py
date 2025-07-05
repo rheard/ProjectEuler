@@ -10,8 +10,6 @@ What is perhaps most surprising is that for each prime with this property
 How many primes below one million have this remarkable property?
 """
 
-import os
-
 from itertools import count
 
 from sympy import isprime

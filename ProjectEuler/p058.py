@@ -19,8 +19,6 @@ If one complete new layer is wrapped around the spiral above, a square spiral wi
     along both diagonals first falls below 10%?
 """
 
-import os
-
 from sympy import isprime
 
 

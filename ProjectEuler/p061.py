@@ -20,8 +20,6 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
     triangle, square, pentagonal, hexagonal, heptagonal, and octagonal, is represented by a different number in the set.
 """
 
-import os
-
 from itertools import count
 from copy import deepcopy
 

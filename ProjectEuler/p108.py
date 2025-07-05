@@ -17,8 +17,6 @@ NOTE: This problem is an easier version of Problem 110;
 
 from __future__ import division
 
-import os
-
 from math import ceil, log
 
 from sympy import factorint, sieve

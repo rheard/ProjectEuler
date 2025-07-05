@@ -17,8 +17,6 @@ Give your answer as a hexadecimal number.
     and without leading zeroes, e.g. 1A3F and not: 1a3f and not 0x1a3f and not $1A3F and not #1A3F and not 0000001A3F)
 """
 
-import os
-
 from itertools import combinations, permutations
 
 

@@ -22,8 +22,6 @@ NOTE: Although the example above does not lend itself to the possibility,
 
 from __future__ import division
 
-import os
-
 from math import floor
 
 from ProjectEuler.utils import binomial

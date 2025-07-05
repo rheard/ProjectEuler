@@ -32,8 +32,6 @@ NOTE: As there are only 16384 routes, it is possible to solve this problem by tr
     it cannot be solved by brute force, and requires a clever method! ;o)
 """
 
-import os
-
 from copy import deepcopy
 
 # We're going to solve this using a clever method for problem 67 later.

@@ -17,8 +17,6 @@ Using sets.txt, a 4K text file with one-hundred sets containing seven to twelve 
 NOTE: This problem is related to Problem 103 and Problem 106.
 """
 
-import os
-
 from multiprocessing import Pool
 
 from ProjectEuler.p103 import special_sum_set

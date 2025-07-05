@@ -1,7 +1,5 @@
 from __future__ import division
 
-import os
-
 from math import atan2, pi
 
 with open('ProjectEuler/p102_triangles.txt', 'r') as rb:

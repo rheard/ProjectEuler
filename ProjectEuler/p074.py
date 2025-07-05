@@ -22,8 +22,6 @@ Starting with 69 produces a chain of five non-repeating terms,
 How many chains, with a starting number below one million, contain exactly sixty non-repeating terms?
 """
 
-import os
-
 from math import factorial
 
 _chain_counts = {145: 1,

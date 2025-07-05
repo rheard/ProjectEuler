@@ -5,7 +5,6 @@ We shall say that an n-digit number is pandigital if it makes use of all the dig
 What is the largest n-digit pandigital prime that exists?
 """
 
-import os
 import string
 
 from sympy import sieve

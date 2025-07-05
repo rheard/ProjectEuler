@@ -23,8 +23,6 @@ For m = 50, find the least value of n for which the fill-count function
 
 from __future__ import division
 
-import os
-
 from itertools import count
 from math import floor
 

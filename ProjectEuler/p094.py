@@ -9,8 +9,6 @@ Find the sum of the perimeters of all almost equilateral triangles with integral
     and whose perimeters do not exceed one billion (1,000,000,000).
 """
 
-import os
-
 from math import sqrt, floor
 
 

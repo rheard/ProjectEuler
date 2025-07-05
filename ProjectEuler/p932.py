@@ -12,8 +12,6 @@ Let T(n) be the sum of all 2025-numbers with n digits or less. You are given T(4
 Find T(16).
 """
 
-import os
-
 from multiprocessing import Pool
 
 

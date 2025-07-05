@@ -7,8 +7,6 @@ How many distinct sets containing each of the digits one through nine exactly on
     contain only prime elements?
 """
 
-import os
-
 from itertools import permutations, product
 
 from sympy import isprime

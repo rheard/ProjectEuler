@@ -13,8 +13,6 @@ O   O   O   O   O
 Find the least value of n for which p(n) is divisible by one million.
 """
 
-import os
-
 from itertools import count
 
 from ProjectEuler.p076 import p

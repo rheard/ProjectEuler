@@ -9,8 +9,6 @@ It can be verified that T_285 = P_165 = H_143 = 40755.
 Find the next triangle number that is also pentagonal and hexagonal.
 """
 
-import os
-
 from math import sqrt
 
 

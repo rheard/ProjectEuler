@@ -28,8 +28,6 @@ NOTE: This is related to Problem 117.
 
 from __future__ import division
 
-import os
-
 from math import floor
 
 from ProjectEuler.utils import binomial

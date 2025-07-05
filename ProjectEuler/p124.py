@@ -25,8 +25,6 @@ Let E(k) be the kth element in the sorted n column;
 If rad(n) is sorted for 1 <= n <= 100000, find E(10000).
 """
 
-import os
-
 from sympy import primefactors
 
 from ProjectEuler.utils import prod

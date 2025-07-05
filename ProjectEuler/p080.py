@@ -9,8 +9,6 @@ For the first one hundred natural numbers, find the total of the digital sums of
     one hundred decimal digits for all the irrational square roots.
 """
 
-import os
-
 from decimal import Decimal, getcontext
 from math import sqrt
 

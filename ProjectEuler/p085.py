@@ -17,8 +17,6 @@ Although there exists no rectangular grid that contains exactly two million rect
     find the area of the grid with the nearest solution.
 """
 
-import os
-
 from math import ceil, sqrt
 
 

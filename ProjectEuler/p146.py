@@ -6,8 +6,6 @@ The smallest positive integer n for which the numbers n**2 + 1, n**2 + 3, n**2 +
 What is the sum of all such integers n below 150 million?
 """
 
-import os
-
 from multiprocessing import Pool
 from itertools import chain
 

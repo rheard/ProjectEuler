@@ -13,8 +13,6 @@ Find the minimal path sum, in matrix.txt (right click and "Save Link/Target As..
     by only moving right and down.
 """
 
-import os
-
 from copy import deepcopy
 
 

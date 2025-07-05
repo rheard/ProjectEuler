@@ -13,8 +13,6 @@ Given that 0 <= x_1, y_1, x_2, y_2 <= 50, how many right triangles can be formed
 
 from __future__ import print_function, division
 
-import os
-
 from fractions import Fraction
 
 

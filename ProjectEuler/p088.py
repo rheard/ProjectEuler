@@ -21,8 +21,6 @@ In fact, as the complete set of minimal product-sum numbers for 2<=k<=12 is {4, 
 What is the sum of all the minimal product-sum numbers for 2<=k<=12000?
 """
 
-import os
-
 from itertools import count
 
 from sympy.utilities.iterables import kbins

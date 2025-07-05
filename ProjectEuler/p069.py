@@ -18,8 +18,6 @@ It can be seen that n=6 produces a maximum n/phi(n) for n <= 10.
 Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 """
 
-import os
-
 from itertools import count
 
 from sympy import prime

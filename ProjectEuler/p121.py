@@ -18,8 +18,6 @@ Find the maximum prize fund that should be allocated to a single game
     in which fifteen turns are played.
 """
 
-import os
-
 from fractions import Fraction
 from math import ceil, floor
 from itertools import combinations

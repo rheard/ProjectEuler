@@ -5,8 +5,6 @@ The cube, 41063625 (345**3), can be permuted to produce two other cubes: 5662310
 Find the smallest cube for which exactly five permutations of its digits are cube.
 """
 
-import os
-
 from itertools import count
 
 

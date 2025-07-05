@@ -12,8 +12,6 @@ By listing the set of reduced proper fractions for d <= 1,000,000 in ascending o
     find the numerator of the fraction immediately to the left of 3/7.
 """
 
-import os
-
 from fractions import Fraction
 
 

@@ -19,7 +19,6 @@ Find the set of four distinct digits, a < b < c < d, for which the longest set o
 """
 
 import operator
-import os
 
 from itertools import combinations, product, count
 

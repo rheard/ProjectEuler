@@ -26,8 +26,6 @@ But because we are allowing 6 and 9 to be reversed, the two distinct sets in the
 How many distinct arrangements of the two cubes allow for all of the square numbers to be displayed?
 """
 
-import os
-
 from itertools import combinations
 
 

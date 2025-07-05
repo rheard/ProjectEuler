@@ -12,8 +12,6 @@ By finding the first arrangement to contain over 10**12 = 1,000,000,000,000 disc
 
 from __future__ import division
 
-import os
-
 from itertools import count
 from decimal import Decimal, ROUND_CEILING
 

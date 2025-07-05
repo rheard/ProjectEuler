@@ -21,8 +21,6 @@ Find the least number for which the proportion of bouncy numbers is exactly 99%.
 
 from __future__ import division
 
-import os
-
 from collections import defaultdict
 
 

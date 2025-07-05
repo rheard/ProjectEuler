@@ -11,8 +11,6 @@ You are given that a_2 = 512 and a_10 = 614656.
 Find a_30.
 """
 
-import os
-
 from collections import defaultdict
 from itertools import count
 

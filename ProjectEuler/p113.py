@@ -15,8 +15,6 @@ As n increases, the proportion of bouncy numbers below n increases such that
 How many numbers below a googol (10**100) are not bouncy?
 """
 
-import os
-
 from math import factorial
 
 from ProjectEuler.utils import prod

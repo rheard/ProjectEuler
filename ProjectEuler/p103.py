@@ -30,8 +30,6 @@ Given that A is an optimum special sum set for n = 7, find its set string.
 NOTE: This problem is related to Problem 105 and Problem 106.
 """
 
-import os
-
 from itertools import islice, combinations, count
 
 from sympy.utilities.iterables import kbins

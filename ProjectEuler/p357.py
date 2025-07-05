@@ -1,5 +1,5 @@
 from __future__ import print_function
-from sympy import primerange, divisors, isprime
+from sympy import divisors, isprime
 from math import sqrt
 
 """

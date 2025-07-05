@@ -47,8 +47,6 @@ Incredibly there are 42336 distinct ways of checking out in total.
 How many distinct ways can a player checkout with a score less than 100?
 """
 
-import os
-
 from itertools import combinations_with_replacement, product
 
 
