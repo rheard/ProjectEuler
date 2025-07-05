@@ -96,7 +96,7 @@ def solve(eq='1 - n + n**2 - n**3 + n**4 - n**5 + n**6 - n**7 + n**8 - n**9 + n*
     """
     eq = parse_expr(eq)
     eq_degree = degree(eq)
-    eq = lambdify(eq.free_symbols, eq)
+    eq = lambdify(list(eq.free_symbols), eq)
     points = [(i, eq(i)) for i in range(1, eq_degree + 2)]
     return sum(int(OP(k, points)(k + 1)) for k in range(1, eq_degree + 1))
 
