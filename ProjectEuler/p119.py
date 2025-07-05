@@ -63,10 +63,9 @@ def solve(n=30):
         problem condition.
     solve() will then count those to get to the required n.
 
-    Unfortunately, after a lot of optimization, this still takes ~2 minutes
-        to run. This isn't completely absurd and I can't figure out how to
-        optimize furthur. Everything is sequential, so parallization is off
-        the table.
+    Unfortunately after a lot of optimization, this still takes ~2 minutes to run.
+        This isn't completely absurd and I can't figure out how to optimize furthur.
+        Everything is sequential, so parallization is off the table.
     """
     n -= 1
     for i, num in enumerate(a()):
