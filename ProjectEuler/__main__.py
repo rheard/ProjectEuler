@@ -1,9 +1,9 @@
 import argparse
 import importlib
 import logging
-import os
 import re
 
+from pathlib import Path
 from timeit import default_timer as timer
 
 logger = logging.getLogger()
@@ -58,7 +58,7 @@ def output_answer(problem_solver, verbose=False):
         problem_solver (callable): The problem solver.
         verbose (bool, optional): Verbose timing output. Defaults to False.
     """
-    problem_key, _ = os.path.splitext(os.path.basename(problem_solver.__code__.co_filename))
+    problem_key = Path(problem_solver.__code__.co_filename).stem
 
     try:
         start_time = timer()
@@ -124,12 +124,12 @@ if __name__ == '__main__':
 
             problems_to_solve[problem_key] = this_problem_solver
     else:
-        for problem in os.listdir(os.path.dirname(__file__)):
+        for problem in Path(__file__).parent.iterdir():
             if not re.match('p[0-9]*\.py', problem):
                 # This doesn't look like a problem solver...
                 continue
 
-            problem_key, _ = os.path.splitext(problem)
+            problem_key = problem.stem
 
             problem_solver = load_problem_solver(problem_key)
             if hasattr(problem_solver, 'answer') and not args.test:
