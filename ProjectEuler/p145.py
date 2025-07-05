@@ -9,46 +9,41 @@ There are 120 reversible numbers below one-thousand.
 How many reversible numbers are there below one-billion (10**9)?
 """
 
-import multiprocessing
-import time
-
-from multiprocessing.pool import Pool
+from multiprocessing import Pool, cpu_count
 
 
-count = 0
+def reversible(start, end):
+    count = 0
+    for n in range(start, end):
+        reverse_n = str(n)[::-1]
+        if reverse_n[0] == '0':
+            # 90 is not a reversible number by problem definition even though 90 + 9 = 99
+            continue
 
-
-def inc_count(x):
-    global count
-    if x:
-        count += 1
-
-
-def reversible(n):
-    this_sum = str(n + int(str(n)[::-1]))
-    for c in this_sum:
-        if c in '02468':
-            return False
-    return True
+        this_sum = str(n + int(reverse_n))
+        for c in this_sum:
+            if c in '02468':
+                break
+        else:
+            count += 1
+    return count
 
 
 def solve(n=10**9):
     """No strategy here. Bruteforce."""
-    global count
-    with Pool(multiprocessing.cpu_count() - 2) as tp:
-        add_more = True
-        for i in range(1, n):
-            while True:
-                if tp._taskqueue.qsize() < 1000000:
-                    add_more = True
-                if tp._taskqueue.qsize() > 2000000:
-                    add_more = False
-                if not add_more:
-                    time.sleep(5)
-                    continue
-                a = tp.apply_async(reversible, args=[i], callback=inc_count)
-                break
-    return count
+    num_chunks = cpu_count()
+
+    chunk_size = n // num_chunks
+    ranges = [(i * chunk_size, (i + 1) * chunk_size) for i in range(num_chunks)]
+
+    # Ensure the last chunk includes any remaining numbers
+    if ranges:
+        ranges[-1] = (ranges[-1][0], n)
+
+    with Pool(processes=num_chunks) as pool:
+        results = pool.starmap(reversible, ranges)
+
+    return sum(results)
 
 
 solve.answer = 608720
