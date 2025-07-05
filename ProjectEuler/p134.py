@@ -22,7 +22,6 @@ def S(p1, p2):
     # Because delta_k is the change in the current 10s position, this_10 == delta_k always.
     #   However, it helps me think logically to keep them seperate values.
     this_10 = 10**position
-    delta = 0
     while True:
         multiple = k * p2
         if ((multiple % next_10) // this_10) == position_value:
@@ -34,10 +33,10 @@ def S(p1, p2):
             this_10 = next_10
             # delta_k just happens to be this_10. Logically I like to think of the next line as
             #   delta_k = 10**position, but that may be a costly operation.
-            delta = this_10
+            delta_k = this_10
             next_10 *= 10
         else:
-            k += delta
+            k += delta_k
     return multiple
 
 
