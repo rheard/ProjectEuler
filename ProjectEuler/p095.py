@@ -30,12 +30,10 @@ def solve(n=10**6, k=500):
             l = d_vals[l - 1]
 
             if l == l_orig:
-                break
+                return i
 
             if l >= n or i >= k:
                 return -1
-
-        return i
 
     chain_lengths = [get_chain_length(x) for x in range(1, n)]
     max_length = max(chain_lengths)

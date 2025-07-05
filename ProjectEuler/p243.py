@@ -66,9 +66,7 @@ def solve(target=Fraction(15499, 94744)):
     for multiple in count(2*running_n, running_n):
         this_ratio = R(multiple)
         if this_ratio < target:
-            break
-
-    return multiple
+            return multiple
 
 
 solve.answer = 892371480

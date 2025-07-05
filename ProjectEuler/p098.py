@@ -133,10 +133,10 @@ def solve(words=None):
                             # Multiple characters cannot map to the same value.
                             char_mapping = {}
 
-                            for i, char in enumerate(word1):
+                            for j, char in enumerate(word1):
                                 if char not in char_mapping:
-                                    char_mapping[char] = square[i]
-                                if char_mapping[char] != square[i] or list(char_mapping.values()).count(square[i]) > 1:
+                                    char_mapping[char] = square[j]
+                                if char_mapping[char] != square[j] or list(char_mapping.values()).count(square[j]) > 1:
                                     break
                             else:
                                 # We found a compatible mapping.

@@ -22,14 +22,14 @@ from itertools import count
 
 
 def count_for_M(M):
-    count = 0
+    output = 0
     l = M
 
     for wh in range(1, 2 * M + 1):
         if sqrt(l**2 + wh**2).is_integer():
-            count += wh // 2 if wh <= l else 1 + (M - (wh + 1) // 2)
+            output += wh // 2 if wh <= l else 1 + (M - (wh + 1) // 2)
 
-    return int(count)
+    return int(output)
 
 
 def solve(distict_count=10**6):

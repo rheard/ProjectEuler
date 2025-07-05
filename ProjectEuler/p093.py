@@ -104,13 +104,11 @@ def solve():
 
         for i in count(1):
             if i not in values_expressed:
+                n = i - 1
+                if n > longest_chain_n:
+                    longest_chain_n = n
+                    longest_chain_cat = ''.join(str(int(x)) for x in val_perm)
                 break
-
-        n = i - 1
-
-        if n > longest_chain_n:
-            longest_chain_n = n
-            longest_chain_cat = ''.join(str(int(x)) for x in val_perm)
 
     return longest_chain_cat
 

@@ -132,6 +132,7 @@ def solve(n=1000):
             prime_fact[2] = ceil(temp_n)
 
         # Find the next lowest exponent, increase it....
+        target_prime = 0
         start_val = prime_fact[2]
         for target_prime in sorted(x for x in prime_fact if x != 2):
             if prime_fact[target_prime] < start_val:

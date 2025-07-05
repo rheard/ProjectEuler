@@ -69,7 +69,7 @@ def solve(n=12):
         for item_len in range(2, len(A) + 1):
             for sub_A in combinations(A, item_len):
                 for B, C in kbins(sub_A, 2, 0):
-                    yield (B, C)
+                    yield B, C
 
     return sum(
         1 for B, C in generate_pairs(tuple(range(1, n + 1))) \
