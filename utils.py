@@ -1,6 +1,5 @@
 from __future__ import division
 import functools
-import inspect
 import math
 import logging
 import operator
@@ -52,8 +51,7 @@ def output_answer(problem_solver, verbose=False):
         problem_solver (callable): The problem solver.
         verbose (bool, optional): Verbose timing output. Defaults to False.
     """
-    caller_frame = inspect.stack()[1]
-    problem_key = os.path.splitext(os.path.basename(caller_frame.filename))[0]
+    problem_key, _ = os.path.splitext(os.path.basename(problem_solver.__code__.co_filename))
 
     try:
         start_time = timer()
