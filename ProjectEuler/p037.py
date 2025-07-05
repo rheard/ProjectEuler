@@ -32,10 +32,7 @@ def two_sided_primes():
 
     s = Sieve()
     for i in count(5):
-        if len(s._list) < i:
-            s.extend_to_no(i)
-
-        prime_i = s._list[i - 1]
+        prime_i = s[i]
 
         if left_truncatable(prime_i) and right_truncatable(prime_i):
             yield prime_i

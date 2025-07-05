@@ -15,8 +15,7 @@ from sympy import sieve
 
 
 def prime_square_remainder(n):
-    sieve.extend_to_no(n)
-    p_n = sieve._list[n - 1]
+    p_n = sieve[n]
     return n * p_n * 2
 
 

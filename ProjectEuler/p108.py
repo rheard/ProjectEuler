@@ -109,7 +109,7 @@ def solve(n=1000):
     """
     max_num_prime_factors = int(ceil(log(n // 2 - 1) / log(3)))
     sieve.extend_to_no(max_num_prime_factors)
-    prime_fact = {sieve._list[i]: 0 for i in range(max_num_prime_factors)}
+    prime_fact = {sieve[i + 1]: 0 for i in range(max_num_prime_factors)}
     minimum = float('inf')
 
     while True:

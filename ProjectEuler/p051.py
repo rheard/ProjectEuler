@@ -50,11 +50,8 @@ def solve(n=8):
         etc...
     """
     hash_map = defaultdict(list)
-    for i in count():
-        if len(sieve._list) <= i:
-            sieve.extend_to_no(i + 1)
-
-        prime_i = sieve._list[i]
+    for i in count(1):
+        prime_i = sieve[i]
 
         for permutation in generate_permutations(str(prime_i)):
             hash_map[permutation].append(prime_i)

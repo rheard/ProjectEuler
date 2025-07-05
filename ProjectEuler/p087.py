@@ -23,23 +23,22 @@ def solve(max_n=5 * 10**7):
     """
     numbers_of_interest = set()
     sieve.extend(int(ceil(sqrt(max_n))))
-    sieve.extend_to_no(len(sieve._list) + 1)
 
-    for i in count():
-        i_fr = sieve._list[i]**4
+    for i in count(1):
+        i_fr = sieve[i]**4
 
         if i_fr > max_n:
             break
 
-        for j in count():
-            j_cu = sieve._list[j]**3
+        for j in count(1):
+            j_cu = sieve[j]**3
             i_fr_j_cu = i_fr + j_cu
 
             if i_fr_j_cu > max_n:
                 break
 
-            for k in count():
-                k_sq = sieve._list[k]**2
+            for k in count(1):
+                k_sq = sieve[k]**2
                 i_fr_j_cu_k_sq = i_fr_j_cu + k_sq
 
                 if i_fr_j_cu_k_sq > max_n:

@@ -26,8 +26,7 @@ def solve(n=5):
     answer = None
 
     for i in count(2):
-        sieve.extend_to_no(i)
-        prime_i = sieve._list[i - 1]
+        prime_i = sieve[i]
 
         for prime_existing in sieve.primerange(3, prime_i):
             if isprime(int(str(prime_i) + str(prime_existing))) \
