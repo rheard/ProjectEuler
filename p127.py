@@ -31,7 +31,7 @@ from fractions import gcd
 from timeit import timeit
 from numpy import array
 
-'''
+"""
 To start solving this, we are going to need to generate co-prime pairs (a, b).
     Then we check if a + b is co-prime to a and b. Lastly check if rad(abc) < c.
 
@@ -58,7 +58,7 @@ To start solving this, we are going to need to generate co-prime pairs (a, b).
     While the co-prime tree is much more efficient for c < 1000, the runtime gets much
     worse very quickly (roughly O(n**2)) and requires gigabytes of memory to hold the
     tree. A brute force approach seems to have a runtime roughly O(n) and uses no memory.
-'''
+"""
 
 factor_cache = dict()
 def factor(n):
@@ -103,7 +103,7 @@ def solve_not_threaded(max_c=120 * 10**3):
 if __name__ == '__main__':
     print(solve(120000))
     print(timeit(lambda: solve(120000), number=1))
-    '''
+    """
     with open('p127_ans.txt', 'w') as wb:
         wb.write(str(ans))
-    '''
+    """

@@ -2,7 +2,7 @@ from __future__ import print_function
 from sympy import factorint, sieve
 from itertools import count
 
-'''
+"""
 The smallest number m such that 10 divides m! is m=5.
 The smallest number m such that 25 divides m! is m=10.
 
@@ -13,7 +13,7 @@ Let S(n) be sum(s(i) for 2 <= i <= n).
     S(100)=2012.
 
 Find S(10**8).
-'''
+"""
 
 # TODO: Change the approach below to use a different strategy:
 #   Start with 2!, get its factors, and count that for the integers that it works for

@@ -2,7 +2,7 @@ from __future__ import print_function
 from sympy import primerange, divisors, isprime
 from math import sqrt
 
-'''
+"""
 We can start by reducing our search space. We can start this by using
     the example of 30. Lets start with the divisor 1:
 
@@ -20,7 +20,7 @@ That will limit our d-space, but we can also reduce our n-space. We know
     n in for d we get that n + n/n must be prime, or that n + 1 must be prime.
     A consequence of this is that the only prime that will be included is
     the prime where n + 1 is a prime, so 2.
-'''
+"""
 
 def solve(max_p=10**8):
     running_sum = 0
