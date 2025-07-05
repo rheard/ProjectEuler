@@ -1,6 +1,9 @@
 from __future__ import print_function
-from sympy import divisors, isprime
+
 from math import sqrt
+
+from sympy import divisors, isprime
+
 
 def solve(max_p=10**8):
     """

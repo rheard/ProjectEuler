@@ -15,6 +15,7 @@ Find the minimal path sum, in matrix.txt (right click and "Save Link/Target As..
 
 from copy import deepcopy
 
+
 with open('ProjectEuler/p081_matrix.txt', 'r') as rb:
     __GRID = [[int(x) for x in line.split(',')] for line in rb.readlines()]
 

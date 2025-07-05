@@ -13,6 +13,7 @@ NOTE: The first two lines in the file represent the numbers in the example given
 
 from __future__ import division
 
+
 with open('ProjectEuler/p099_base_exp.txt', 'r') as rb:
     __NUM_EXPONENTS = [list(int(i) for i in x.strip().split(',')) for x in rb.readlines()]
 

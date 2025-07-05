@@ -21,7 +21,6 @@ If one complete new layer is wrapped around the spiral above, a square spiral wi
 
 from sympy import isprime
 
-
 from ProjectEuler.p028 import (
     bottom_left_diagonal as top_left_diagonal,
     bottom_right_diagonal as top_right_diagonal,

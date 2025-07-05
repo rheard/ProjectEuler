@@ -30,6 +30,7 @@ from sympy import primefactors
 
 from ProjectEuler.utils import prod
 
+
 factor_cache = dict()
 def factor(n):
     if n not in factor_cache:

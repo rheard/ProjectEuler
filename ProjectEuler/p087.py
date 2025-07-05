@@ -11,7 +11,7 @@ How many numbers below fifty million can be expressed as the sum of a prime squa
 """
 
 from itertools import count
-from math import sqrt, ceil
+from math import ceil, sqrt
 
 from sympy import sieve
 

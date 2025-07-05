@@ -9,10 +9,11 @@ There are 120 reversible numbers below one-thousand.
 How many reversible numbers are there below one-billion (10**9)?
 """
 
-import time
 import multiprocessing
+import time
 
 from multiprocessing.pool import Pool
+
 
 count = 0
 

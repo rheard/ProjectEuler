@@ -9,7 +9,7 @@ Find the sum of the perimeters of all almost equilateral triangles with integral
     and whose perimeters do not exceed one billion (1,000,000,000).
 """
 
-from math import sqrt, floor
+from math import floor, sqrt
 
 
 def solve(max_L=10**9):

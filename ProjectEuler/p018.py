@@ -34,6 +34,7 @@ NOTE: As there are only 16384 routes, it is possible to solve this problem by tr
 
 from copy import deepcopy
 
+
 # We're going to solve this using a clever method for problem 67 later.
 # First lets build the puzzle of interest for this problem.
 __PUZZLE = [[int(x) for x in line.split(' ')] for line in """75

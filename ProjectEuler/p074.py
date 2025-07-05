@@ -24,6 +24,7 @@ How many chains, with a starting number below one million, contain exactly sixty
 
 from math import factorial
 
+
 _chain_counts = {145: 1,
                  169: 3,
                  363601: 3,

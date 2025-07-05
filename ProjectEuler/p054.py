@@ -51,6 +51,7 @@ How many hands does Player 1 win?
 
 from itertools import chain
 
+
 _values = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
 
 with open('ProjectEuler/p054_poker.txt', 'r') as rb:

@@ -21,6 +21,7 @@ from multiprocessing import Pool
 
 from ProjectEuler.p103 import special_sum_set
 
+
 with open('ProjectEuler/p105_sets.txt', 'r') as rb:
     __SETS = [tuple(int(x) for x in line.split(',')) for line in rb.readlines()]
 

@@ -15,6 +15,7 @@ How many starting numbers below ten million will arrive at 89?
 
 from itertools import permutations
 
+
 _last_ans = {1: 1, 89: 89}
 
 

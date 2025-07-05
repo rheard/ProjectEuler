@@ -17,6 +17,7 @@ NOTE: All anagrams formed must be contained in the given text file.
 from collections import defaultdict
 from itertools import count
 
+
 with open('ProjectEuler/p042_words.txt', 'r') as rb:
     __WORDS = [x.strip('"') for x in rb.read().split(',')]
 

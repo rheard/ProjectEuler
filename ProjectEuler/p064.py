@@ -44,8 +44,8 @@ Exactly four continued fractions, for N <= 13, have an odd period.
 How many continued fractions for N <= 10000 have an odd period?
 """
 
-from math import floor
 from decimal import Decimal, getcontext
+from math import floor
 
 
 def continued_fraction(n):

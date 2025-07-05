@@ -11,7 +11,7 @@ There are exactly fourteen triangles containing a right angle that can be formed
 Given that 0 <= x_1, y_1, x_2, y_2 <= 50, how many right triangles can be formed?
 """
 
-from __future__ import print_function, division
+from __future__ import division, print_function
 
 from fractions import Fraction
 

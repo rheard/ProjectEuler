@@ -19,8 +19,8 @@ Find the maximum prize fund that should be allocated to a single game
 """
 
 from fractions import Fraction
-from math import ceil, floor
 from itertools import combinations
+from math import ceil, floor
 
 from ProjectEuler.utils import prod
 

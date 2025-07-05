@@ -15,10 +15,10 @@ In fact, d = 12 is the smallest denominator having a resilience R(d) < 4/10 
 Find the smallest denominator d, having a resilience R(d) < 15499/94744 .
 """
 
-from itertools import count
 from fractions import Fraction
+from itertools import count
 
-from sympy import totient, nextprime
+from sympy import nextprime, totient
 
 
 def R(d):

@@ -9,7 +9,7 @@ In fact, with the exception of p1 = 3 and p2 = 5, for every pair of consecutive 
 Find the sum of S for every pair of consecutive primes with 5 <= p1 <= 1000000.
 """
 
-from sympy import sieve, nextprime
+from sympy import nextprime, sieve
 
 
 def S(p1, p2):

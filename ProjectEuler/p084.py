@@ -64,9 +64,9 @@ Statistically it can be shown that the three most popular squares, in order, are
 If, instead of using two 6-sided dice, two 4-sided dice are used, find the six-digit modal string.
 """
 
-from random import sample, choice
 from collections import deque
 from math import ceil
+from random import choice, sample
 
 
 def solve(sides=4, rolls=10**6):

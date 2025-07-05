@@ -1,10 +1,12 @@
 from __future__ import division
+
 import functools
-import math
 import logging
+import math
 import operator
 
 from itertools import accumulate, count
+
 
 # gcd was deprecated in fractions and moved to math.
 try:

@@ -10,9 +10,9 @@ Interestingly, phi(87109)=79180, and it can be seen that 87109 is a permutation 
 Find the value of n, 1 < n < 10**7, for which phi(n) is a permutation of n and the ratio n/phi(n) produces a minimum.
 """
 
-from multiprocessing import Pool
 from itertools import repeat
 from math import sqrt
+from multiprocessing import Pool
 
 from sympy import prevprime, sieve
 

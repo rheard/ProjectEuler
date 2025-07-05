@@ -20,7 +20,7 @@ Find the set of four distinct digits, a < b < c < d, for which the longest set o
 
 import operator
 
-from itertools import combinations, product, count
+from itertools import combinations, count, product
 
 from sympy.utilities.iterables import kbins
 

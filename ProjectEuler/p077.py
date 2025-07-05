@@ -14,6 +14,7 @@ from itertools import count
 
 from sympy import primefactors
 
+
 _prime_sums = {
     0: 1,  # This doesn't make sense to me, but is needed for the recursion to work... It must be true?
     1: 0,  # 1 is not a prime. There is no way to add primes to sum to 1.

@@ -39,7 +39,7 @@ Find the sum of FITs for the BOPs.
 """
 
 from numpy import matrix
-from sympy import Symbol, lambdify, degree
+from sympy import Symbol, degree, lambdify
 from sympy.parsing.sympy_parser import parse_expr
 
 

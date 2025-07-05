@@ -16,7 +16,7 @@ What is the smallest odd composite that cannot be written as the sum of a prime 
 
 from itertools import count
 
-from sympy import prevprime, isprime
+from sympy import isprime, prevprime
 
 
 def solve():

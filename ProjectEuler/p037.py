@@ -9,8 +9,8 @@ Find the sum of the only eleven primes that are both truncatable from left to ri
 NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 """
 
-from math import log10, floor
 from itertools import count
+from math import floor, log10
 
 from sympy import Sieve, isprime
 

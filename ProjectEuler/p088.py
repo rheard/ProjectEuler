@@ -23,8 +23,8 @@ What is the sum of all the minimal product-sum numbers for 2<=k<=12000?
 
 from itertools import count
 
-from sympy.utilities.iterables import kbins
 from sympy import factorint
+from sympy.utilities.iterables import kbins
 
 from ProjectEuler.utils import prod
 

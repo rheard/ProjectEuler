@@ -1,6 +1,9 @@
 from __future__ import print_function
-from sympy import factorint, sieve
+
 from itertools import count
+
+from sympy import factorint, sieve
+
 
 """
 The smallest number m such that 10 divides m! is m=5.

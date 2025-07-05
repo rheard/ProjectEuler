@@ -18,6 +18,7 @@ from __future__ import division
 
 from math import atan2, pi
 
+
 with open('ProjectEuler/p102_triangles.txt', 'r') as rb:
     __TRIANGLES = [list(map(int, line.split(','))) for line in rb.readlines()]
     __TRIANGLES = [list(zip(*[triangle[i::2] for i in range(2)])) for triangle in __TRIANGLES]
