@@ -126,7 +126,7 @@ if __name__ == '__main__':
             problems_to_solve[problem_key] = this_problem_solver
     else:
         for problem in Path(__file__).parent.iterdir():
-            if not re.match('p[0-9]*\.py', problem):
+            if not re.match('p[0-9]*\.py', problem.name):
                 # This doesn't look like a problem solver...
                 continue
 
