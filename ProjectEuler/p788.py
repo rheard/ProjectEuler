@@ -40,8 +40,6 @@ def D_instance(N, mod=None):
         # This is for all the numbers of the form xii...iii of length N
         #   where i may or may not be a dominating number, but x definitely isn't
         9 * sum(
-            # Note: This is also for all the numbers where the dominating number is 0.
-            #   They will also be of this form even if I handled them separately
             comb(N - 1, k) * pow(9, N - 1 - k, mod)
 
             # For the digits i, we need at least N // 2 + 1 to be a dominating digit and up to all the digits except 1,
