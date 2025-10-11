@@ -35,10 +35,10 @@ def D_instance(N, mod=None):
     D but only for numbers of a specific length N, instead of all numbers less than or equal to length N.
         This can be multi-threaded.
     """
-    ans = 9 * (  # All the i below can be any digit 1 through 9
+    ans = 9 * (  # All the dominating digits below can be any digit 1 through 9
 
         # This is for all the numbers of the form xii...iii of length N
-        #   where i may or may not be a dominating number, but x definitely isn't
+        #   where i may or may not be a dominating digit, but x definitely isn't
         9 * sum(
             comb(N - 1, k) * pow(9, N - 1 - k, mod)
 
@@ -47,7 +47,7 @@ def D_instance(N, mod=None):
         )
 
         # This is for all the numbers of the form xi...iii of length N
-        #   where i may or may not be a dominating number, but x definitely is
+        #   where i may or may not be a dominating digit, but x definitely is
         + sum(
             comb(N - 1, k) * pow(9, N - 1 - k, mod)
 
