@@ -50,6 +50,9 @@ def D_instance(N, mod=None):
         #   where i may or may not be a dominating number, but x definitely is
         + sum(
             comb(N - 1, k) * pow(9, N - 1 - k, mod)
+
+            # For the digits i, we need at least N // 2 to be a dominating digit and up to all the digits
+            #   Note this is 1 less than above because we've taken care of that one with the leading digit
             for k in range(N // 2, N)
         )
     )
