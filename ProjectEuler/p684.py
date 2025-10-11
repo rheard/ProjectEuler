@@ -25,7 +25,7 @@ def S(k, mod=None):
 def solve():
     """
     Starting with s(n): after doing some testing and applying some logic, it should be obvious that
-        all answers must be of the form: n9999...999.
+        all answers must be of the form: r9999...999.
 
     In other words, a lot of 9s to the right followed by the smallest possible number to get to 9; or n % 9.
 
