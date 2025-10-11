@@ -35,7 +35,7 @@ def D_instance(N, mod=None):
     D but only for numbers of a specific length N, instead of all numbers less than or equal to length N.
         This can be multi-threaded.
     """
-    ans = 9 * (  # The things below happened to share a factor of 9 even if for different reasons, so I pulled it out
+    ans = 9 * (  # All the i below can be any digit 1 through 9
 
         # This is for all the numbers of the form xii...iii of length N
         #   where i may or may not be a dominating number, but x definitely isn't
