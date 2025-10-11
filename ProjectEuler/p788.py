@@ -35,10 +35,10 @@ def D_instance(N, mod=None):
     D but only for numbers of a specific length N, instead of all numbers less than or equal to length N.
         This can be multi-threaded.
     """
-    ans = 9 * (  # All the i below can be any digit 1 through 9
+    ans = 9 * (  # All the dominating digits below can be any digit 1 through 9
 
         # This is for all the numbers of the form xii...iii of length N
-        #   where i may or may not be a dominating number, but x definitely isn't
+        #   where i may or may not be a dominating digit, but x definitely isn't
         9 * sum(
             comb(N - 1, k) * pow(9, N - 1 - k, mod)
 
@@ -47,7 +47,7 @@ def D_instance(N, mod=None):
         )
 
         # This is for all the numbers of the form xi...iii of length N
-        #   where i may or may not be a dominating number, but x definitely is
+        #   where i may or may not be a dominating digit, but x definitely is
         + sum(
             comb(N - 1, k) * pow(9, N - 1 - k, mod)
 
@@ -73,34 +73,33 @@ def solve(N=2022):
             and sums with lower values.
 
     There are 2 groups of dominating numbers I can think of:
-        1. Dominating numbers where the dominating number is 1 through 9
-        2. Dominating numbers where the dominating number is 0
+        1. Dominating numbers where the dominating digit is 1 through 9
+        2. Dominating numbers where the dominating digit is 0
 
     Let's start with the first case:
         It should be fairly obvious that this should be a multiple of 9, because of every number 2022 there are
             corresponding numbers 1011, 3033, 4044, etc...
 
-        So I will only look at dominating numbers where the dominating number is 1, and multiply that by 9.
+        So I will only look at dominating numbers where the dominating digit is 1, and multiply that by 9.
 
         Again I see two cases with these numbers:
-            1. Where the dominating number is the leading digit.
-            2. The dominating number is not the leading digit, and therefor the leading digit can be any digit except 0.
+            1. Where the dominating digit is the leading digit.
+            2. The dominating digit is not the leading digit,
+                therefor the leading digit can be any digit except 0 or the dominating digit.
 
-        If the dominating number is the leading digit, then for the remaining N - 1 digits,
-            at least (N - 1) // 2 + 1 need to be the dominating number.
+        If the dominating digit is the leading digit, then for the remaining N - 1 digits,
+            at least (N - 1) // 2 + 1 need to be the dominating digit.
 
             It should be obvious this is basic combinatorics:
                 sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range((N - 1) // 2 + 1, N))
 
                 the 9**(N - 1 - k) is for the 9 possible digits that any place
-                    which isn't a dominating number could be excluding the dominating number itself.
-                This is how many dominating numbers there are with the dominating number is 1,
-                    and a leading digit of the dominating number.
+                    which isn't a dominating digit could be (excluding the dominating digit itself).
 
-        If the dominating number is NOT the leading digit, it is a fairly similar sum:
+        If the dominating digit is NOT the leading digit, it is a fairly similar sum:
             8 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
 
-            The leading 8 is from the 8 possible first digits excluding 0 and the dominating number,
+            The leading 8 is from the 8 possible first digits excluding 0 and the dominating digit,
                 and then the remaining N - 1 digits need to be at least N // 2 + 1
                 digits consisting of the dominating digit.
 
@@ -111,7 +110,7 @@ def solve(N=2022):
 
             Multiply by 9 to make generic for any digit from 1 to 9.
 
-    Now for numbers where the dominating digit is 0:
+    Now for numbers where the dominating digit is 0, again basic logic from above repeated can bring one to:
         9 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
 
     Bringing this all together, we can see the answer should be:
