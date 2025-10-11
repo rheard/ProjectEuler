@@ -42,8 +42,7 @@ def D_instance(N, mod=None):
         9 * sum(
             comb(N - 1, k) * pow(9, N - 1 - k, mod)
 
-            # For the digits i, we need at least N // 2 + 1 to be a dominating digit and up to all the digits except 1,
-            #   because the above 1 handles if all digits are the dominating digit
+            # For the digits i, we need at least N // 2 + 1 to be a dominating digit and up to all the digits
             for k in range(N // 2 + 1, N)
         )
 
