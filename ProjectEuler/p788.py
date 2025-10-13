@@ -30,31 +30,24 @@ def modulo(N, mod=None):
         return N
 
 
+def ceildiv(a, b):
+    """The opposite of floordiv, //"""
+    return -(a // -b)
+
+
 def D_instance(N, mod=None):
     """
     D but only for numbers of a specific length N, instead of all numbers less than or equal to length N.
         This can be multi-threaded.
     """
-    ans = 9 * (  # All the dominating digits below can be any digit 1 through 9
+    ans = (
 
-        # This is for all the numbers of the form xii...iii of length N
-        #   where i may or may not be a dominating digit, but x definitely isn't
-        9 * sum(
+        90 * sum(
             comb(N - 1, k) * pow(9, N - 1 - k, mod)
-
-            # For the digits i, we need at least N // 2 + 1 to be a dominating digit and up to all the digits
             for k in range(N // 2 + 1, N)
         )
 
-        # This is for all the numbers of the form xi...iii of length N
-        #   where i may or may not be a dominating digit, but x definitely is
-        + sum(
-            comb(N - 1, k) * pow(9, N - 1 - k, mod)
-
-            # For the digits i, we need at least N // 2 to be a dominating digit and up to all the digits
-            #   Note this is 1 less than above because we've taken care of that one with the leading digit
-            for k in range(N // 2, N)
-        )
+        + comb(N - 1, N // 2) * pow(9, ceildiv(N, 2), mod)
     )
     return modulo(ans, mod)
 
@@ -134,17 +127,40 @@ def solve(N=2022):
             sum(9 * (N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
             9 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
 
-    This gives a final answer of:
+    Now the equation looks like this:
         9 * (
             sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range((N - 1) // 2 + 1, N))
             + 9 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
         )
 
+        These sums can actually be merged by pulling out the first instance where k=N//2 from the first sum
+            to get these sums to have a matching range:
+        9 * (
+            (N - 1)! / ((N - 1 - N // 2)! * k!) * 9**(N - 1 - N // 2)
+            + sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
+            + 9 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
+        )
+
+        Now these sums can be combined (by merging the 9* into the sum and extracting the 10* back out):
+        9 * (
+            (N - 1)! / ((N - 1 - N // 2)! * k!) * 9**(N - 1 - N // 2)
+            + 10 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
+        )
+
+    Lastly the 9 from the outside can be multiplied to the inner sum,
+        and will be absorbed by the power nicely in the first summand.
+
+    This gives a final solution of:
+        (N - 1)! / ((N - 1 - N // 2)! * k!) * 9**(N - N // 2)
+        + 90 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
+
     I might've broken the problem into more steps than are required,
         but we've reached a nice svelte solution in the end.
 
     One optimization is that (N - 1)! / ((N - 1 - k)! * k!) is clearly the binomial coefficient, with
-        args N - 1 and k
+        args N - 1 and k. Similar logic can be applied to the first summand with args N - 1 and N // 2.
+
+    Lastly the logic N - N // 2 is essentially just ceil(N/2) but I don't think that is an "optimization".
     """
     return D(N, 1_000_000_007)
 
