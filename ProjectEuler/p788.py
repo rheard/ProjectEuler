@@ -81,10 +81,10 @@ def solve(N=2022):
                 therefor the leading digit can be any digit except 0 or the dominating digit.
 
         If the dominating digit is the leading digit, then for the remaining N - 1 digits,
-            at least (N - 1) // 2 + 1 need to be the dominating digit.
+            at least N // 2 need to be the dominating digit.
 
             It should be obvious this is basic combinatorics:
-                sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range((N - 1) // 2 + 1, N))
+                sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2, N))
 
                 the 9**(N - 1 - k) is for the 9 possible digits that any place
                     which isn't a dominating digit could be (excluding the dominating digit itself).
@@ -98,7 +98,7 @@ def solve(N=2022):
 
         So bringing this all together, the number of possible dominating numbers with a dominating digit of 1
             of length N can be represented with:
-            sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range((N - 1) // 2 + 1, N))
+            sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2, N))
             + 8 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
 
             Multiply by 9 to make generic for any digit from 1 to 9.
@@ -108,15 +108,15 @@ def solve(N=2022):
 
     Bringing this all together, we can see the answer should be:
         9 * (
-            sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range((N - 1) // 2 + 1, N))
+            sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2, N))
             + 8 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
         ) +
         9 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
 
-        Since they share a multiple of 9 lets remove that. Also lets merge the two sums that share a range
-            (we'll need to move the 8* into the sum first):
+    Since they share a multiple of 9 lets remove that. Also lets merge the two sums that share a range
+        (we'll need to move the 8* into the sum first):
         9 * (
-            sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range((N - 1) // 2 + 1, N))
+            sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2, N))
             + sum(8 * (N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k)
                   + (N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
         )
@@ -129,21 +129,21 @@ def solve(N=2022):
 
     Now the equation looks like this:
         9 * (
-            sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range((N - 1) // 2 + 1, N))
+            sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2, N))
             + 9 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
         )
 
-        These sums can actually be merged by pulling out the first instance where k=N//2 from the first sum
-            to get these sums to have a matching range:
+    These sums can actually be merged by pulling out the first instance where k=N//2 from the first sum
+        to get these sums to have a matching range:
         9 * (
-            (N - 1)! / ((N - 1 - N // 2)! * k!) * 9**(N - 1 - N // 2)
+            (N - 1)! / ((N - 1 - N // 2)! * (N // 2)!) * 9**(N - 1 - N // 2)
             + sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
             + 9 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
         )
 
-        Now these sums can be combined (by merging the 9* into the sum and extracting the 10* back out):
+    Now these sums can be combined (by merging the 9* into the sum and extracting the 10* back out):
         9 * (
-            (N - 1)! / ((N - 1 - N // 2)! * k!) * 9**(N - 1 - N // 2)
+            (N - 1)! / ((N - 1 - N // 2)! * (N // 2)!) * 9**(N - 1 - N // 2)
             + 10 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
         )
 
@@ -151,7 +151,7 @@ def solve(N=2022):
         and will be absorbed by the power nicely in the first summand.
 
     This gives a final solution of:
-        (N - 1)! / ((N - 1 - N // 2)! * k!) * 9**(N - N // 2)
+        (N - 1)! / ((N - 1 - N // 2)! * (N // 2)!) * 9**(N - N // 2)
         + 90 * sum((N - 1)! / ((N - 1 - k)! * k!) * 9**(N - 1 - k) for k in range(N // 2 + 1, N))
 
     I might've broken the problem into more steps than are required,
