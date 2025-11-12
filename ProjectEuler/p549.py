@@ -81,7 +81,7 @@ def solve(n=10**8):
 
     Looking at the example on Wikipedia this makes sense: essentially what this algorithm is doing with the infinite sum
         is correcting for the problem I observed previously. That is, it counts the prime numbers first, then their
-            squares, then their cubes, etc, up until the number raided to a power can no longer divide into n.
+            squares, then their cubes, etc, up until the number raised to a power can no longer divide into n.
 
         Wikipedia even gives a nice, finite method for this:
 
