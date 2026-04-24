@@ -31,6 +31,7 @@ def fibonacci_generator(a=0, b=1):
 
 def fibonacci(n):
     """Get the nth fibonacci number"""
+    # TODO: This is dependant on floats and thus may fail at large numbers
     return int(round((PHI**n - (-PHI)**-n) / math.sqrt(5), 0))
 
 
