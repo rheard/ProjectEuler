@@ -9,6 +9,8 @@ It is possible to make E2 in the following way:
 How many different ways can E2 be made using any number of coins?
 """
 
+from copy import copy
+
 
 def count_possible_currency_in_tree(chosen_currency, currency_left):
     running_sum = sum(chosen_currency)
@@ -23,13 +25,14 @@ def count_possible_currency_in_tree(chosen_currency, currency_left):
         # If we get down to the 1p, then there is only 1 combination possible, that of an extra 1p * (200 - running_sum)
         return 1
     else:
-        # While we can, add this denomincation to the list and continue to the next denomination.
-        i = 0
+        # Maximum number of coins of this denomination we can still add
+        max_i = (200 - running_sum) // current_denomination
+
+        # While we can, add this denomination to the list and continue to the next denomination.
         branch_count = 0
-        while running_sum + i * current_denomination <= 200:
+        for i in range(max_i + 1):
             branch_count += count_possible_currency_in_tree(chosen_currency + [current_denomination] * i,
-                                                            [x for x in currency_left])  # Create a copy
-            i += 1
+                                                            copy(currency_left))  # Create a copy
 
     return branch_count
 
