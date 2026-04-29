@@ -9,80 +9,45 @@ You are given S(3) = 63270 and S(7) = 85499991450.
 Find S(2020). Give your answer modulo 10**16.
 """
 
-from collections import defaultdict
-from itertools import permutations
 from math import factorial
-from pprint import pprint
-from time import time
+
+from sympy.utilities.iterables import partitions
 
 from ProjectEuler.utils import prod
 
 
-def partitions(n, max_value=None):
-    if max_value is None:
-        max_value = n
-    if n == 0:
-        return [[]]
-    result = []
-    for i in range(1, min(n, max_value) + 1):
-        for p in partitions(n - i, i):
-            result.append([i] + p)
-    return result
-
-counts = defaultdict(lambda: defaultdict(int))
-def build_number(digits: list) -> int:
-    n = len(digits)
-    for pos, d in enumerate(reversed(digits)):
-        counts[pos][d] += 1
-    return sum(d * 10**(n - i - 1) for i, d in enumerate(digits))
-
-
-def S(n=2020):
+def S(n=2020, m=None):
     total = 0
+    pos_max = m if m else n
     for d_sum in range(1, 10):
-        print(f"Digit {d_sum}")
         for digits in partitions(d_sum):
-            raw_digit_count = len(digits) + 1
-            if raw_digit_count > n:  # This partitioning with the digit itself would be more than n digits
-                continue  # TODO: This will never happen for n=2020
+            raw_digit_count = sum(digits.values()) + 1
 
-            zeroes = n - raw_digit_count
-            digits.append(d_sum)
-            digits.extend([0] * zeroes)
+            # This will never happen for n=2020, and was only needed to verify small values of n:
+            # if raw_digit_count > n:  # This partitioning with the digit itself would be more than n digits
+            #     continue
 
-            assert len(digits) == n
+            digits[d_sum] = digits.get(d_sum, 0) + 1  # Add the digit sum to the number too
 
-            for p in set(permutations(digits, n)):
-                total += build_number(p)
+            # It is important to include the 0 count as that will affect the number of permutations of the other digits
+            zero_count = n - raw_digit_count
+            if zero_count > 0:
+                digits[0] = zero_count
 
-    return total
+            for pos in range(pos_max):
+                for d, digit_count in digits.items():
+                    if d == 0:
+                        continue  # minor optimization
 
+                    # how many times each digit would appear at each location:
+                    pos_digit_count = factorial(n - 1) // factorial(digit_count - 1)
+                    pos_digit_count //= prod(factorial(other_count)
+                                             for other_d, other_count in digits.items()
+                                             if other_d != d)
 
-def new_S(n=2020):
-    total = 0
-    for d_sum in range(1, 10):
-        print(f"Digit {d_sum}")
-        for digits in partitions(d_sum):
-            raw_digit_count = len(digits) + 1
-            if raw_digit_count > n:  # This partitioning with the digit itself would be more than n digits
-                continue  # TODO: This will never happen for n=2020
+                    total += 10**pos * d * pos_digit_count
 
-            digits = {
-                d: digits.count(d) for d in digits
-            }
-
-            if d_sum in digits:
-                digits[d_sum] += 1
-            else:
-                digits[d_sum] = 1
-
-            for pos in range(1, n + 1):
-                for d in digits:
-                    digit_count = 1
-                    # TODO: Somehow calculate how many times each digit would appear at each location
-                    total += 10**pos * d * digit_count
-
-    return total
+    return total % 10**m if m else total
 
 
 def solve(n=2020):
@@ -92,10 +57,47 @@ def solve(n=2020):
 
     This works however it starts to become apparent around S(12) that this is far too slow.
         I tried using `more_itertools.distinct_permutations`, however it doesn't seem that much faster...
-        It certainly won't get us to S(2020).
+        Switching to sympy's `partitions` method was a nice speed boost here,
+            but neither of these solutions will get to S(2020).
 
+    My next idea was to go through each digital position, and count how many times each digit would appear there
+        using the partitions. Simple enough, except now the problem becomes: how many times does each digit
+            appear at each location?
+
+        I overthought this for months and was off by a factor of 1000 until finally it hit me
+            while walking through it with a small example. Lets walk through it
+                with the digital sum being 3 and the partitioning being 1+2.
+
+            The DS numbers are:
+                123, 132,
+                213, 231,
+                312, 321.
+
+            Grouping it like this it should be obvious: yes, there is only one 1, and yet it appears in the left-most
+                position twice. That is because there are 2 ways to arrange the other digits over the other positions.
+
+        So the number of times a digit appears at a particular position actually deeply depends on the other digits
+            and locations!
+
+        It is pretty obvious that the number of times the other digits appear
+                in the other n - 1 positions is simply:
+            factorial(n - 1) / prod(factorial(other_digit_count) for other_digit, other_digit_count in other_digits)
+
+        keeping in mind that the selected digit would be a part of the other digits if it appears more than once.
+
+    This realization was what I needed to get my algorithm working.
+        To get fast enough for n=2020, I just needed to cache factorial and we're done.
+
+    Actually, we're not done... While cleaning up this solution, something I just thought of:
+        Since I'm calculating this number as modulo 10**16, and since I'm calculating
+            each positional value.... I could just not calculate any of the positions from 17 through 2020?
+            I just need to make sure we're still calculating the right number of permutations (using 2020).
+
+    That trick deviates from the definition of S in the problem,
+        but it brings the execution time down from 30+ seconds to less than 1 second, and I don't even need to
+            cache factorial anymore!
     """
-    return S(n) % 10**16
+    return S(n, 16)
 
 
-# solve.answer = 233168
+solve.answer = 4598797036650685
