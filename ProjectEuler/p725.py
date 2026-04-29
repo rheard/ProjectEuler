@@ -34,18 +34,19 @@ def S(n=2020, m=None):
             if zero_count > 0:
                 digits[0] = zero_count
 
-            for pos in range(pos_max):
-                for d, digit_count in digits.items():
-                    if d == 0:
-                        continue  # minor optimization
+            position_multiplier = (10**pos_max - 1) // 9
 
-                    # how many times each digit would appear at each location:
-                    pos_digit_count = factorial(n - 1) // factorial(digit_count - 1)
-                    pos_digit_count //= prod(factorial(other_count)
-                                             for other_d, other_count in digits.items()
-                                             if other_d != d)
+            for d, digit_count in digits.items():
+                if d == 0:
+                    continue  # minor optimization
 
-                    total += 10**pos * d * pos_digit_count
+                # how many times each digit would appear at each location:
+                pos_digit_count = factorial(n - 1) // factorial(digit_count - 1)
+                pos_digit_count //= prod(factorial(other_count)
+                                         for other_d, other_count in digits.items()
+                                         if other_d != d)
+
+                total += position_multiplier * d * pos_digit_count
 
     return total % 10**m if m else total
 
@@ -96,6 +97,12 @@ def solve(n=2020):
     That trick deviates from the definition of S in the problem,
         but it brings the execution time down from 30+ seconds to less than 1 second, and I don't even need to
             cache factorial anymore!
+
+    Yet again while on a walk, I've thought of another optimization:
+        I'm going over every position in the number and multiplying by 10**pos, however that is the only time the
+            position is used. I'm essentially just multiplying the number by 111...111 of length pos.
+
+        So instead of using a for loop (of length 16), I could just use a repunit?
     """
     return S(n, 16)
 
