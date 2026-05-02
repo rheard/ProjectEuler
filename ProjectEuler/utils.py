@@ -97,3 +97,12 @@ except ImportError:
                 total_ways = total_ways * (n - i) // (i + 1)
 
             return total_ways
+
+
+def digital_sum(i):
+    """sum(int(x) for x in str(i)) without doing string logic"""
+    total = 0
+    while i > 0:
+        i, d = divmod(i, 10)
+        total += d
+    return total
