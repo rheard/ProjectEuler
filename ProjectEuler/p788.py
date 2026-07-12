@@ -12,6 +12,8 @@ Find D(2022). Give your answer modulo 1_000_000_007.
 from functools import cache
 from math import factorial as _factorial
 
+from ProjectEuler.utils import ceildiv
+
 # In order to meet the speed requirement I need to cache the calls to factorial... and comb...
 factorial = cache(_factorial)
 
@@ -28,11 +30,6 @@ def modulo(N, mod=None):
         return N % mod
     else:
         return N
-
-
-def ceildiv(a, b):
-    """The opposite of floordiv, //"""
-    return -(a // -b)
 
 
 def D_instance(N, mod=None):

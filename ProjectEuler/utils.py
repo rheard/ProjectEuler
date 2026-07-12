@@ -106,3 +106,8 @@ def digital_sum(i):
         i, d = divmod(i, 10)
         total += d
     return total
+
+
+def ceildiv(a, b):
+    """The opposite of floordiv, //"""
+    return -(a // -b)
